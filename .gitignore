@@ -1,0 +1,17 @@
+# Chặn môi trường ảo (Nặng hàng trăm MB, không ai đẩy cái này lên cả)
+.venv/
+venv/
+__pycache__/
+
+# Chặn file cấu hình hệ thống
+.DS_Store
+
+# QUAN TRỌNG: Chặn lộ API KEY và Secrets
+.streamlit/secrets.toml
+.env
+
+# (Tùy chọn) Chặn dữ liệu nếu file quá nặng > 100MB
+# data/*.csv
+# data/*.db
+
+venv_bds/
