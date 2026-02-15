@@ -45,7 +45,7 @@ def process_and_save():
 
     # Kiểm tra file tồn tại
     if not os.path.exists(csv_path):
-        print(f"❌ Không tìm thấy file tại: {csv_path}")
+        print(f"Không tìm thấy file tại: {csv_path}")
         print("Hãy kiểm tra lại tên file trong thư mục data!")
         return
 
@@ -103,7 +103,7 @@ def process_and_save():
     # Xóa các dòng thiếu 1 trong các thông tin trên
     df_clean = df.dropna(subset=required_features, how='any')
 
-    print(f"📊 Kết quả: Giữ lại {len(df_clean)}/{len(df)} tin.")
+    print(f"Kết quả: Giữ lại {len(df_clean)}/{len(df)} tin.")
 
     # --- LỌC TRÙNG LẶP ---
     df_clean = df_clean.drop_duplicates(
@@ -116,7 +116,7 @@ def process_and_save():
     df_clean.to_sql('listings', conn, if_exists='replace', index=False)
     conn.close()
     
-    print(f"✅ Đã lưu dữ liệu sạch vào: {db_path}")
+    print(f"Đã lưu dữ liệu sạch vào: {db_path}")
 
 if __name__ == "__main__":
     process_and_save()

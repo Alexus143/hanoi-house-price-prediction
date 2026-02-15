@@ -1,23 +1,51 @@
 import undetected_chromedriver as uc
+from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+import sys
 import time
-import random
-import json
 import pandas as pd
 import os 
 
 BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
-# Một số trang web sẽ chặn bot nên cần header để giả như người dùng
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/'
-}
+
+# --- CẤU HÌNH CHẾ ĐỘ CHẠY ---
+# Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
+# Đặt là True khi đẩy lên GitHub Actions
+CHAY_NGAM = True  
+
+def init_driver():
+    chrome_options = Options()
+    
+    # 1. Thêm User-Agent (CỰC KỲ QUAN TRỌNG)
+    # Giả mạo đây là trình duyệt Chrome thật trên Windows 10
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    
+    # 2. Các tùy chọn chống phát hiện Bot
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled") # Ẩn dòng "Chrome is being controlled by automated software"
+    chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    
+    # 3. Cấu hình Chạy Ngầm (Headless)
+    if CHAY_NGAM:
+        chrome_options.add_argument("--headless=new") # Dùng chế độ new headless ổn định hơn
+        chrome_options.add_argument("--window-size=1920,1080") # Bắt buộc set size nếu không web sẽ bị vỡ layout
+    
+    # Khởi tạo Driver
+    driver = webdriver.Chrome(options=chrome_options)
+    
+    # Mẹo nhỏ: Xóa thuộc tính navigator.webdriver để tránh bị phát hiện
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    
+    return driver
 
 def crawls(pages):
-    driver = uc.Chrome(use_subprocess=True, version_main=139) # chọn phiên bản Chrome phù hợp với máy, ví dụ 139, use_subprocess=True để bot chạy như một tiến trình con
-    driver.maximize_window() # Mở rộng cửa sổ trình duyệt để tránh bị ẩn phần tử
+    driver = init_driver() 
+    #driver.maximize_window() # Mở rộng cửa sổ trình duyệt để tránh bị ẩn phần tử
     res = []
     try:
         for p in range(1, pages + 1): # Duyệt qua các trang
