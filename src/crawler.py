@@ -14,7 +14,7 @@ BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
 # --- CẤU HÌNH CHẾ ĐỘ CHẠY ---
 # Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
 # Đặt là True khi đẩy lên GitHub Actions
-CHAY_NGAM = False  
+CHAY_NGAM = True  
 
 def init_driver():
     chrome_options = uc.ChromeOptions()
