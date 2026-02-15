@@ -88,7 +88,7 @@ def save_to_csv(data, filename, header_mode=True):
     print(f"Dữ liệu đã được lưu vào {filename}")
 
 if __name__ == "__main__":
-    df = crawls(pages=1)
+    df = crawls(pages=100)
 
     current_dir = os.path.dirname(os.path.abspath(__file__)) # Đang ở trong src/
     project_root = os.path.dirname(current_dir)              # Lùi ra ngoài 1 cấp (Root)
