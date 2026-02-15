@@ -7,36 +7,30 @@ import sys
 import time
 import pandas as pd
 import os 
+import random
 
 BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
 
 # --- CẤU HÌNH CHẾ ĐỘ CHẠY ---
 # Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
 # Đặt là True khi đẩy lên GitHub Actions
-CHAY_NGAM = True  
+CHAY_NGAM = False  
 
 def init_driver():
-    chrome_options = Options()
+    chrome_options = uc.ChromeOptions()
     
-    # 1. Thêm User-Agent (CỰC KỲ QUAN TRỌNG)
-    # Giả mạo đây là trình duyệt Chrome thật trên Windows 10
-    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    
-    # 2. Các tùy chọn chống phát hiện Bot
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled") # Ẩn dòng "Chrome is being controlled by automated software"
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--disable-gpu")
+    #Các tùy chọn chống phát hiện Bot
+    chrome_options.add_argument("--disable-popup-blocking")
+    chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    
-    # 3. Cấu hình Chạy Ngầm (Headless)
-    if CHAY_NGAM:
-        chrome_options.add_argument("--headless=new") # Dùng chế độ new headless ổn định hơn
-        chrome_options.add_argument("--window-size=1920,1080") # Bắt buộc set size nếu không web sẽ bị vỡ layout
+    chrome_options.add_argument("--disable-gpu")
     
     # Khởi tạo Driver
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = uc.Chrome(options=chrome_options, 
+                       headless=CHAY_NGAM, 
+                       version_main=139, 
+                       use_subprocess=True)
     
     # Mẹo nhỏ: Xóa thuộc tính navigator.webdriver để tránh bị phát hiện
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -53,37 +47,66 @@ def crawls(pages):
                 url = BASE_URL
             else:
                 url = f"{BASE_URL}/p{p}"
-            driver.get(url)
-            time.sleep(5)  # Chờ trang load hoàn toàn
+            try:
+                driver.get(url) # Lúc này nó sẽ vào đúng trang web chứ không bị lỗi DNS nữa
+            except Exception as e:
+                print(f"Lỗi load trang: {e}")
+                continue
+            # Random delay để giống người thật hơn (từ 3 đến 6 giây)
+            time.sleep(random.uniform(3, 6))
             lst_bds = driver.find_elements(By.CSS_SELECTOR, '.js__card')
             for bds in lst_bds:
-                title = bds.find_element(By.CSS_SELECTOR, '.js__card-title').text
-                #print(title)
-                price = bds.find_element(By.CSS_SELECTOR, '.re__card-config-price').text
-                area = bds.find_element(By.CSS_SELECTOR, '.re__card-config-area').text
-                #bedroom = bds.find_element(By.CSS_SELECTOR, '.re__card-config-bedroom').text
-                #toilet = bds.find_element(By.CSS_SELECTOR, '.re__card-config-toilet').text
-                location = bds.find_element(By.CSS_SELECTOR, '.re__card-location').text
-                date = bds.find_element(By.CSS_SELECTOR, '.re__card-published-info-published-at').get_attribute('aria-label')
-                res.append({
-                    'title': title,
-                    'price': price,
-                    'area': area,
-                    #'bedroom': bedroom,
-                    #'toilet': toilet,
-                    'location': location,
-                    'scraped_date': time.strftime("%d/%m/%Y"),
-                    'published_date': date
-                })
+                try:
+                    # Lấy các thông tin cơ bản (Dùng try-except cho từng trường để tránh lỗi vặt)
+                    try: title = bds.find_element(By.CSS_SELECTOR, '.js__card-title').text
+                    except: title = ""
+                    
+                    try: price = bds.find_element(By.CSS_SELECTOR, '.re__card-config-price').text
+                    except: price = ""
+                    
+                    try: area = bds.find_element(By.CSS_SELECTOR, '.re__card-config-area').text
+                    except: area = ""
+                    
+                    try: location = bds.find_element(By.CSS_SELECTOR, '.re__card-location').text
+                    except: location = ""
+                    
+                    try: date = bds.find_element(By.CSS_SELECTOR, '.re__card-published-info-published-at').get_attribute('aria-label')
+                    except: date = ""
+                    
+                    # LẤY MÔ TẢ (DESCRIPTION)
+                    try: description = bds.find_element(By.CSS_SELECTOR, '.re__card-description').text
+                    except: description = ""
+
+                    # Chỉ lấy tin có tiêu đề
+                    if title:
+                        res.append({
+                            'title': title,
+                            'price': price,
+                            'area': area,
+                            'location': location,
+                            'scraped_date': time.strftime("%d/%m/%Y"),
+                            'published_date': date,
+                            'description': description
+                        })
+                except Exception as e:
+                    continue
     except Exception as e:
         print(f"Lỗi khi crawl dữ liệu: {e}")
     finally:
-        driver.quit()
+        try:
+            driver.quit()
+        except:
+            pass # Nếu driver đã chết thì bỏ qua
 
     return res
 
 def save_to_csv(data, filename, header_mode=True):
+    if not data:
+        print("Không cào được dữ liệu nào!")
+        return
+    
     df = pd.DataFrame(data)
+
     df.to_csv(filename, mode='a', index=False, header=header_mode, encoding='utf-8-sig')
     print(f"Dữ liệu đã được lưu vào {filename}")
 

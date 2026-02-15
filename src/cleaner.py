@@ -50,7 +50,7 @@ def process_and_save():
         return
 
     column_names = [
-        'title', 'price', 'area', 'location', 'scraped_date', 'published_date'
+        'title', 'price', 'area', 'location', 'scraped_date', 'published_date', 'description'
     ]
     print(f"Đang đọc dữ liệu từ: {csv_path}")
 
@@ -65,11 +65,11 @@ def process_and_save():
             engine='python'        # Dùng engine python mạnh hơn
         )
         # --------------------
-        
+        # --- LỌC RÁC HEADER ---
+        # Vì file CSV được append liên tục, có thể header bị lặp lại ở giữa file
+        # Cần xóa các dòng mà 'title' lại bằng chính chữ 'title'
+        df = df[df['title'] != 'title']
         print(f"Đã đọc xong! Tổng số dòng thô: {len(df)}")
-        
-        # Kiểm tra xem cột scraped_date có dữ liệu không
-        print("Mẫu dữ liệu scraped_date:", df['scraped_date'].unique()[:5])
 
     except Exception as e:
         print(f"Lỗi đọc CSV: {e}")
@@ -117,6 +117,10 @@ def process_and_save():
     conn.close()
     
     print(f"Đã lưu dữ liệu sạch vào: {db_path}")
+
+    clean_csv_path = os.path.join(project_root, 'data', 'cleaned_data.csv')
+    df_clean.to_csv(clean_csv_path, index=False, encoding='utf-8-sig')
+    print(f"Đã lưu dữ liệu sạch vào: {clean_csv_path}")
 
 if __name__ == "__main__":
     process_and_save()
