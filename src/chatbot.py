@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 from streamlit_float import *
 
 def render_chatbot(df, api_key):
@@ -11,9 +11,9 @@ def render_chatbot(df, api_key):
     
     # Cấu hình API
     try:
-        genai.configure(api_key=api_key)
+        client = genai.Client(api_key=api_key)
     except Exception as e:
-        st.error(f"Lỗi API Key: {e}")
+        st.error(f"Lỗi khởi tạo AI Client: {e}")
         return
 
     # --- 1. CSS & STYLE ---
@@ -116,8 +116,6 @@ def render_chatbot(df, api_key):
                 
                 # --- GỌI GEMINI ---
                 try:
-                    # Dùng model flash cho nhanh
-                    model = genai.GenerativeModel('gemini-2.5-flash') 
                     
                     full_prompt = f"""
                     Bạn là trợ lý ảo Bất động sản Hà Đông. 
@@ -127,7 +125,10 @@ def render_chatbot(df, api_key):
                     Hãy trả lời ngắn gọn, thân thiện, dựa trên số liệu trên.
                     """
                     
-                    response = model.generate_content(full_prompt)
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=full_prompt
+                    )
                     ai_reply = response.text
                     
                     # Hiển thị câu trả lời AI
