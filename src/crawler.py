@@ -88,10 +88,21 @@ def save_to_csv(data, filename, header_mode=True):
     print(f"Dữ liệu đã được lưu vào {filename}")
 
 if __name__ == "__main__":
-    df = crawls(pages=100)
-    file_path = 'realtime_estimate_tracker/data/batdongsan_data.csv'
-    header_mode = not os.path.exists(file_path)
-    save_to_csv(df, file_path, header_mode)
-    print(f"Đã cập nhật thêm {len(df)} dòng mới vào {file_path}")
+    df = crawls(pages=1)
+
+    current_dir = os.path.dirname(os.path.abspath(__file__)) # Đang ở trong src/
+    project_root = os.path.dirname(current_dir)              # Lùi ra ngoài 1 cấp (Root)
+    data_dir = os.path.join(project_root, 'data')            # Trỏ vào thư mục data
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+        print(f"Đã tạo mới thư mục: {data_dir}")
+
+    #Định nghĩa đường dẫn file cuối cùng
+    csv_path = os.path.join(data_dir, 'batdongsan_data.csv')
+
+    header_mode = not os.path.exists(csv_path)
+    save_to_csv(df, csv_path, header_mode)
+    print(f"Đã cập nhật thêm {len(df)} dòng mới vào {csv_path}")
 
     
