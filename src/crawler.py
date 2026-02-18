@@ -15,6 +15,7 @@ BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
 # Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
 # Đặt là True khi đẩy lên GitHub Actions
 CHAY_NGAM = True  
+target_version = 139 if not CHAY_NGAM else None
 
 def init_driver():
     chrome_options = uc.ChromeOptions()
@@ -29,7 +30,7 @@ def init_driver():
     # Khởi tạo Driver
     driver = uc.Chrome(options=chrome_options, 
                        headless=CHAY_NGAM, 
-                       version_main=139, 
+                       version_main=target_version,
                        use_subprocess=True)
     
     # Mẹo nhỏ: Xóa thuộc tính navigator.webdriver để tránh bị phát hiện
