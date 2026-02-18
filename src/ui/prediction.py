@@ -1,6 +1,7 @@
 # src/prediction.py
 import streamlit as st
 import pandas as pd
+from src import config
 from src.ai_engine.predictor import PricePredictor
 
 def render_prediction(df, model, model_columns):
@@ -11,7 +12,7 @@ def render_prediction(df, model, model_columns):
     model_columns: Danh sách cột của model
     """
     if model is None:
-        st.warning("Chưa có Model AI. Hãy chạy file `src/train_model.py` để huấn luyện!")
+        st.warning("Chưa có Model AI. Hãy chạy file `src/ai_engine/train_model.py` để huấn luyện!")
         st.info("Sau khi chạy xong, reload lại trang web này.")
         return
 
@@ -28,19 +29,13 @@ def render_prediction(df, model, model_columns):
         in_ward = st.selectbox("Khu vực:", valid_wards, key="pred_ward")
 
     if st.button("🔮 Định giá ngay", type="primary"):
-        # 1. Tạo input dataframe
-        input_data = pd.DataFrame({'area': [in_area], 'ward': [in_ward]})
-        
-        # 2. One-hot encoding
-        input_encoded = pd.get_dummies(input_data, columns=['ward'])
-        
-        # 3. Đồng bộ cột với model (Thêm cột thiếu, điền 0)
-        input_encoded = input_encoded.reindex(columns=model_columns, fill_value=0)
         
         # 4. Dự đoán
         try:
-            predictor = PricePredictor(model_path=None)  # model_path sẽ được truyền vào từ app.py
-            pred_price = predictor.predict_single(in_area, in_ward, model_columns)
+            predictor = PricePredictor(model=model, model_columns=model_columns)
+            
+            # Gọi hàm dự đoán (chỉ cần area và ward)
+            pred_price = predictor.predict_single(in_area, in_ward)
             pred_m2 = (pred_price * 1000) / in_area
             
             # 5. Hiển thị kết quả

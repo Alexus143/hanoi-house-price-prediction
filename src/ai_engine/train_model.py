@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 import sqlite3
 import joblib
@@ -7,6 +8,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from src import config
+
 def load_data(db_path):
     conn = sqlite3.connect(db_path)
     # Lấy toàn bộ dữ liệu (cả cũ và mới vừa cào thêm)
@@ -15,30 +19,26 @@ def load_data(db_path):
     return df
 
 def preprocess_data(df):
-    """Làm sạch và chuẩn bị dữ liệu"""
-    # 1. Tách phường nếu chưa có
-    if 'ward' not in df.columns:
-        df['ward'] = df['location'].apply(lambda x: x.split(',')[0].strip())
-    
-    # 2. Lọc dữ liệu rác
+    # 1. Tách phường và lọc bỏ giá trị trống
     df = df.dropna(subset=['price_billion', 'area', 'ward'])
-    df = df[df['area'] > 10] # Lọc nhà < 10m2 (thường là lỗi)
     
-    # 3. Chọn Features & Target
-    X = df[['area', 'ward']]
+    # 2. ÉP KIỂU SỐ TƯỜNG MINH (Quan trọng nhất)
+    df['area'] = pd.to_numeric(df['area'], errors='coerce')
+    df = df.dropna(subset=['area']) # Loại bỏ những dòng area không phải là số
+    
+    # 3. Chỉ lấy đúng 2 cột features
+    X = df[['area', 'ward']].copy()
     y = df['price_billion']
     
-    # 4. One-Hot Encoding (Quan trọng: Xử lý phường mới xuất hiện)
-    X_encoded = pd.get_dummies(X, columns=['ward'])
+    # 4. Dummy encoding
+    X = pd.get_dummies(X, columns=['ward'])
     
-    return X_encoded, y
+    return X, y
 
 def train_and_evaluate():
     # --- 1. SETUP ĐƯỜNG DẪN ---
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.dirname(current_dir)
-    db_path = os.path.join(project_root, 'data', 'real_estate.db')
-    model_path = os.path.join(project_root, 'data', 'house_price_model.pkl')
+    db_path = config.DB_PATH
+    model_path = config.MODEL_PATH
 
     print("⏳ Đang tải dữ liệu từ Database...")
     df = load_data(db_path)
