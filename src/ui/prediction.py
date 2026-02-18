@@ -1,6 +1,7 @@
 # src/prediction.py
 import streamlit as st
 import pandas as pd
+from src.ai_engine.predictor import PricePredictor
 
 def render_prediction(df, model, model_columns):
     """
@@ -10,7 +11,7 @@ def render_prediction(df, model, model_columns):
     model_columns: Danh sách cột của model
     """
     if model is None:
-        st.warning("⚠️ Chưa có Model AI. Hãy chạy file `src/train_model.py` để huấn luyện!")
+        st.warning("Chưa có Model AI. Hãy chạy file `src/train_model.py` để huấn luyện!")
         st.info("Sau khi chạy xong, reload lại trang web này.")
         return
 
@@ -38,7 +39,8 @@ def render_prediction(df, model, model_columns):
         
         # 4. Dự đoán
         try:
-            pred_price = model.predict(input_encoded)[0]
+            predictor = PricePredictor(model_path=None)  # model_path sẽ được truyền vào từ app.py
+            pred_price = predictor.predict_single(in_area, in_ward, model_columns)
             pred_m2 = (pred_price * 1000) / in_area
             
             # 5. Hiển thị kết quả

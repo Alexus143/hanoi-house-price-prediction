@@ -6,9 +6,9 @@ import joblib
 from streamlit_float import *
 
 # --- IMPORT MODULES CỦA BẠN ---
-from src.chatbot import render_chatbot
-from src.dashboard import render_dashboard
-from src.prediction import render_prediction
+from src.ai_engine.chatbot import render_chatbot
+from src.ui.dashboard import render_dashboard
+from src.ui.prediction import render_prediction
 
 # --- CẤU HÌNH TRANG ---
 st.set_page_config(page_title="Bất Động Sản Hà Đông", layout="wide")
@@ -67,5 +67,5 @@ with tab2:
 # CHATBOT (MODULE RIÊNG)
 # =========================================================
 # Thay API KEY của bạn vào đây (hoặc dùng st.secrets)
-API_KEY = "AIzaSyDZknlLHIsQeaO07uou-Sa_dkIMkupv9ao" 
+API_KEY = st.secrets["GEMINI_API_KEY"]
 render_chatbot(df, API_KEY)
