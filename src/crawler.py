@@ -14,10 +14,10 @@ import platform
 
 BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
 
-# --- CẤU HÌNH CHẾ ĐỘ CHẠY ---
-# Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
-# Đặt là True khi đẩy lên GitHub Actions
-CHAY_NGAM = True 
+# Kiểm tra xem có đang chạy trên GitHub Actions không?
+# Nếu biến 'GITHUB_ACTIONS' tồn tại -> Trả về True (Chạy ngầm)
+# Nếu không (máy local) -> Trả về False (Hiện trình duyệt)
+CHAY_NGAM = os.getenv("GITHUB_ACTIONS") == "true"
 
 def get_chrome_version():
     """
