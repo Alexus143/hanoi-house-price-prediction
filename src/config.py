@@ -13,6 +13,7 @@ DATA_DIR = os.path.join(ROOT_DIR, 'data')
 
 # File paths
 RAW_CSV_PATH = os.path.join(DATA_DIR, 'batdongsan_data.csv')
+DB_PATH = os.path.join(DATA_DIR, 'real_estate.db')
 CLEANED_DATA_PATH = os.path.join(DATA_DIR, 'cleaned_data.csv')
 MODEL_PATH = os.path.join(DATA_DIR, 'house_price_model.pkl')
 

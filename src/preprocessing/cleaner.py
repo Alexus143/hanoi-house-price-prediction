@@ -2,7 +2,10 @@ import pandas as pd
 import sqlite3
 import os
 import numpy as np
+import sys
 from datetime import datetime
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from src import config
 
 # --- HÀM LẤY PHƯỜNG TỪ ĐỊA CHỈ ---
 def extract_ward(location_str):
@@ -32,32 +35,22 @@ def clean_price(price_str):
     return None
 
 def process_and_save():
-    # --- XỬ LÝ ĐƯỜNG DẪN THÔNG MINH (QUAN TRỌNG) ---
-    # Lấy vị trí của file cleaner.py đang chạy (trong thư mục src)
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    
-    # Lùi lại 1 cấp để ra thư mục dự án (realtime_estimate_tracker)
-    project_root = os.path.dirname(current_dir)
-    
-    # Tạo đường dẫn chuẩn tới file CSV và DB trong thư mục data
-    csv_path = os.path.join(project_root, 'data', 'batdongsan_data.csv')
-    db_path = os.path.join(project_root, 'data', 'real_estate.db')
 
     # Kiểm tra file tồn tại
-    if not os.path.exists(csv_path):
-        print(f"Không tìm thấy file tại: {csv_path}")
+    if not os.path.exists(config.RAW_CSV_PATH):
+        print(f"Không tìm thấy file tại: {config.RAW_CSV_PATH}")
         print("Hãy kiểm tra lại tên file trong thư mục data!")
         return
 
     column_names = [
         'title', 'price', 'area', 'location', 'scraped_date', 'published_date', 'description'
     ]
-    print(f"Đang đọc dữ liệu từ: {csv_path}")
+    print(f"Đang đọc dữ liệu từ: {config.RAW_CSV_PATH}")
 
     try:
         # --- SỬA ĐOẠN NÀY ---
         df = pd.read_csv(
-            csv_path,
+            config.RAW_CSV_PATH,
             header=None,              # không dùng dòng đầu làm header
             names=column_names,    # Nhưng GHI ĐÈ tên cột bằng danh sách mới (đủ 6 cột)
             skiprows=1,              # Bỏ qua dòng đầu tiên (header cũ)
@@ -112,15 +105,14 @@ def process_and_save():
     )
 
     # --- LƯU DATABASE ---
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(config.DB_PATH)
     df_clean.to_sql('listings', conn, if_exists='replace', index=False)
     conn.close()
     
-    print(f"Đã lưu dữ liệu sạch vào: {db_path}")
+    print(f"Đã lưu dữ liệu sạch vào: {config.DB_PATH}")
 
-    clean_csv_path = os.path.join(project_root, 'data', 'cleaned_data.csv')
-    df_clean.to_csv(clean_csv_path, index=False, encoding='utf-8-sig')
-    print(f"Đã lưu dữ liệu sạch vào: {clean_csv_path}")
+    df_clean.to_csv(config.CLEANED_DATA_PATH, index=False, encoding='utf-8-sig')
+    print(f"Đã lưu dữ liệu sạch vào: {config.CLEANED_DATA_PATH}")
 
 if __name__ == "__main__":
     process_and_save()
