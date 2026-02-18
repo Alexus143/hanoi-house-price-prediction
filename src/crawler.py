@@ -8,14 +8,71 @@ import time
 import pandas as pd
 import os 
 import random
+import subprocess  
+import re  
+import platform       
 
 BASE_URL = 'https://batdongsan.com.vn/nha-dat-ban-ha-dong'
 
 # --- CẤU HÌNH CHẾ ĐỘ CHẠY ---
 # Đặt là False khi chạy trên máy tính của bạn để xem trình duyệt
 # Đặt là True khi đẩy lên GitHub Actions
-CHAY_NGAM = True  
-target_version = 139 if not CHAY_NGAM else None
+CHAY_NGAM = True 
+
+def get_chrome_version():
+    """
+    Hàm tự động dò tìm phiên bản Chrome trên cả Windows và Linux
+    Trả về số phiên bản chính (Ví dụ: 139)
+    """
+    system_name = platform.system()
+    version = None
+
+    try:
+        if system_name == "Windows":
+            # Cách 1: Thử truy vấn Registry (Nhanh và chuẩn nhất trên Windows)
+            try:
+                # Lệnh cmd để đọc Registry key nơi Chrome lưu version
+                process = subprocess.Popen(
+                    ['reg', 'query', 'HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon', '/v', 'version'],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+                )
+                output, _ = process.communicate()
+                output = output.decode()
+                # Parse kết quả: ... version REG_SZ 139.0.xxxx ...
+                match = re.search(r'version\s+REG_SZ\s+(\d+)', output)
+                if match:
+                    version = int(match.group(1))
+            except:
+                pass
+
+        elif system_name == "Linux":
+            # Cách 2: Chạy lệnh terminal trên Linux (cho GitHub Actions)
+            try:
+                cmd_list = ['google-chrome', 'google-chrome-stable', 'chromium-browser', 'chromium']
+                for cmd in cmd_list:
+                    try:
+                        result = subprocess.run([cmd, '--version'], capture_output=True, text=True)
+                        if result.returncode == 0:
+                            output = result.stdout.strip()
+                            # Output dạng: "Google Chrome 144.0.7559.0"
+                            match = re.search(r'(\d+)\.\d+\.\d+\.\d+', output)
+                            if match:
+                                version = int(match.group(1))
+                                break
+                    except FileNotFoundError:
+                        continue
+            except:
+                pass
+                
+    except Exception as e:
+        print(f"⚠️ Không dò được version Chrome: {e}")
+
+    if version:
+        print(f"🖥️ Phát hiện Chrome ({system_name}): Version {version}")
+    else:
+        print(f"⚠️ Không tìm thấy Chrome trên {system_name}. Sẽ để thư viện tự quyết định.")
+        
+    return version
 
 def init_driver():
     chrome_options = uc.ChromeOptions()
@@ -26,7 +83,9 @@ def init_driver():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
-    
+
+    target_version = get_chrome_version()  # Tự động lấy version Chrome đang cài trên máy
+
     # Khởi tạo Driver
     driver = uc.Chrome(options=chrome_options, 
                        headless=CHAY_NGAM, 
@@ -112,7 +171,7 @@ def save_to_csv(data, filename, header_mode=True):
     print(f"Dữ liệu đã được lưu vào {filename}")
 
 if __name__ == "__main__":
-    df = crawls(pages=100)
+    df = crawls(pages=2)
 
     current_dir = os.path.dirname(os.path.abspath(__file__)) # Đang ở trong src/
     project_root = os.path.dirname(current_dir)              # Lùi ra ngoài 1 cấp (Root)
