@@ -58,6 +58,7 @@ def run_crawler(pages=2):
                     # Logic bóc tách cũ của bạn
                     try:
                         data = extract_card_data(card)
+                        print(f"[Spider] Bóc tách: {data['title']} | {data['price']} | {data['area']} | {data['location']} | {data['published_date']}")
                         if data['title']:  # Chỉ lấy tin có tiêu đề
                             results.append(data)
                     except: continue
@@ -83,5 +84,5 @@ def save_data(data):
 
 if __name__ == "__main__":
     # Điểm chạy test
-    data = run_crawler(pages=100)
+    data = run_crawler(pages=2)
     save_data(data)
