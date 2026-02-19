@@ -30,19 +30,23 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: 4. Chạy Crawler (Cào dữ liệu)
-        run: python src/crawler.py
+      # [QUAN TRỌNG] Chạy module Crawler bằng cờ -m
+      - name: 4. Chạy Crawler (Data Loader)
+        run: python -m src.data_loader.spider
 
-      - name: 5. Chạy Cleaner (Làm sạch & Gộp DB)
-        run: python src/cleaner.py
+      # [QUAN TRỌNG] Chạy module Cleaner
+      - name: 5. Chạy Cleaner (Preprocessing)
+        run: python -m src.preprocessing.cleaner
 
-      - name: 6. Train lại Model (Học dữ liệu mới)
-        run: python src/train_model.py
+      # [QUAN TRỌNG] Chạy module Train Model
+      - name: 6. Train lại Model (AI Engine)
+        run: python -m src.ai_engine.train_model
 
       - name: 7. Lưu dữ liệu mới vào Git (Commit & Push)
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'action@github.com'
-          git add data/*.csv data/*.db data/*.pkl
+          # Thêm cả file json (nếu có) và pkl model mới
+          git add data/*.csv data/*.db data/*.pkl data/*.json
           # Kiểm tra xem có gì thay đổi không rồi mới commit
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update data & model" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update data & model [CI/CD]" && git push)
