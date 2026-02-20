@@ -51,7 +51,12 @@ def run_crawler(pages=2):
             
             try:
                 driver.get(url)
-                time.sleep(random.uniform(3, 6))
+                time.sleep(random.uniform(5, 8))
+
+                if p == 1:
+                    screenshot_path = os.path.join(config.DATA_DIR, 'debug_github_actions.png')
+                    driver.save_screenshot(screenshot_path)
+                    print(f"📸 Đã chụp ảnh màn hình tại: {screenshot_path}")
                 
                 cards = driver.find_elements(By.CSS_SELECTOR, '.js__card')
                 for card in cards:

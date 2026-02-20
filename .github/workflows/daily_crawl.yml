@@ -42,7 +42,14 @@ jobs:
       - name: 6. Train lại Model (AI Engine)
         run: python -m src.ai_engine.train_model
 
-      - name: 7. Lưu dữ liệu mới vào Git (Commit & Push)
+      - name: 7. Upload Debug Screenshot
+        uses: actions/upload-artifact@v4
+        if: always() # Luôn chạy dù step trước có lỗi hay không
+        with:
+          name: debug-screenshot
+          path: data/debug_github_actions.png
+
+      - name: 8. Lưu dữ liệu mới vào Git (Commit & Push)
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'action@github.com'
