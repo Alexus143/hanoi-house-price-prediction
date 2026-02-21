@@ -27,17 +27,16 @@ def extract_card_data(card_element):
     
     try: data['location'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-location').text
     except: data['location'] = ""
+
+    try: data['scraped_date'] = time.strftime("%d/%m/%Y")
+    except: data['scraped_date'] = ""
     
     try: data['published_date'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-published-info-published-at').get_attribute('aria-label')
     except: data['published_date'] = ""
     
-    # LẤY MÔ TẢ (DESCRIPTION)
     try: data['description'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-description').text
     except: data['description'] = ""
     
-    try: data['scraped_date'] = time.strftime("%d/%m/%Y")
-    except: data['scraped_date'] = ""
-
     return data
 
 def run_crawler(pages=2):
@@ -52,18 +51,13 @@ def run_crawler(pages=2):
             try:
                 driver.get(url)
                 time.sleep(random.uniform(5, 8))
-
-                if p == 1:
-                    screenshot_path = os.path.join(config.DATA_DIR, 'debug_github_actions.png')
-                    driver.save_screenshot(screenshot_path)
-                    print(f"📸 Đã chụp ảnh màn hình tại: {screenshot_path}")
                 
                 cards = driver.find_elements(By.CSS_SELECTOR, '.js__card')
                 for card in cards:
-                    # Logic bóc tách cũ của bạn
+                    # Logic bóc tách
                     try:
                         data = extract_card_data(card)
-                        print(f"[Spider] Bóc tách: {data['title']} | {data['price']} | {data['area']} | {data['location']} | {data['published_date']}")
+                        #print(f"[Spider] Bóc tách: {data['title']} | {data['price']} | {data['area']} | {data['location']} | {data['published_date']}")
                         if data['title']:  # Chỉ lấy tin có tiêu đề
                             results.append(data)
                     except: continue
