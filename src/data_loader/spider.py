@@ -37,6 +37,12 @@ def extract_card_data(card_element):
     try: data['description'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-description').text
     except: data['description'] = ""
     
+    try: data['bedrooms'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-config-bedroom').get_attribute('aria-label')
+    except: data['bedrooms'] = ""
+
+    try: data['bathrooms'] = card_element.find_element(By.CSS_SELECTOR, '.re__card-config-bathroom').get_attribute('aria-label')
+    except: data['bathrooms'] = ""
+
     return data
 
 def run_crawler(pages=2):
@@ -83,5 +89,5 @@ def save_data(data):
 
 if __name__ == "__main__":
     # Điểm chạy test
-    data = run_crawler(pages=100)
+    data = run_crawler(pages=1)
     save_data(data)
