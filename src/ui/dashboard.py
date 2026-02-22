@@ -3,37 +3,37 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 def render_dashboard(df):
-    """
-    Hàm hiển thị Tab Thống kê
-    df: Dataframe chứa dữ liệu bất động sản
-    """
-    col_filter1, col_filter2 = st.columns(2)
+    """Hàm hiển thị Tab Thống kê"""
+    # Thay vì 2 cột, giờ ta chia làm 3 cột bộ lọc
+    col_filter1, col_filter2, col_filter3 = st.columns(3)
     
-    # 1. Bộ lọc Khu vực
     with col_filter1:
         location_counts = df['ward'].value_counts()
-        options = ["Tất cả"] + location_counts.index.tolist()
-        chon_phuong = st.selectbox("Chọn Phường/Xã:", options, index=0, key="dash_phuong")
+        options_ward = ["Tất cả"] + location_counts.index.tolist()
+        chon_phuong = st.selectbox("Chọn Phường/Xã:", options_ward, index=0, key="dash_phuong")
 
-    # Lọc dữ liệu theo phường
-    if chon_phuong != "Tất cả":
-        df_display = df[df['ward'] == chon_phuong]
-    else:
-        df_display = df
-
-    # 2. Bộ lọc Giá (Slider)
     with col_filter2:
-        max_price_db = float(df_display['price_billion'].max()) if not df_display.empty else 10.0
-        # Mặc định loại bỏ top 5% giá ảo để slider đỡ bị dài quá
-        default_max = float(df_display['price_billion'].quantile(0.95)) if not df_display.empty else max_price_db
-        
-        price_range = st.slider(
-            "Khoảng giá mong muốn (Tỷ):",
-            0.0, max_price_db, (0.0, default_max),
-            key="dash_price"
-        )
+        # CẬP NHẬT: Thêm bộ lọc Loại hình BĐS
+        if 'property_type' in df.columns:
+            type_counts = df['property_type'].value_counts()
+            options_type = ["Tất cả"] + type_counts.index.tolist()
+        else:
+            options_type = ["Tất cả"]
+        chon_loai = st.selectbox("Loại hình:", options_type, index=0, key="dash_loai")
 
-    # Lọc dữ liệu theo giá
+    # Lọc dữ liệu theo phường và loại hình
+    df_display = df.copy()
+    if chon_phuong != "Tất cả":
+        df_display = df_display[df_display['ward'] == chon_phuong]
+    if chon_loai != "Tất cả" and 'property_type' in df_display.columns:
+        df_display = df_display[df_display['property_type'] == chon_loai]
+
+    with col_filter3:
+        max_price_db = float(df_display['price_billion'].max()) if not df_display.empty else 10.0
+        default_max = float(df_display['price_billion'].quantile(0.95)) if not df_display.empty else max_price_db
+        price_range = st.slider("Khoảng giá (Tỷ):", 0.0, max_price_db, (0.0, default_max), key="dash_price")
+
+    # Lọc lần cuối theo giá
     df_final = df_display[
         (df_display['price_billion'] >= price_range[0]) & 
         (df_display['price_billion'] <= price_range[1])
