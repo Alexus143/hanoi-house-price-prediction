@@ -20,18 +20,21 @@ def load_data(db_path):
 
 def preprocess_data(df):
     # 1. Tách phường và lọc bỏ giá trị trống
-    df = df.dropna(subset=['price_billion', 'area', 'ward'])
+    # Thêm các cột mới vào subset để đảm bảo dữ liệu đầy đủ
+    df = df.dropna(subset=['price_billion', 'area', 'ward', 'property_type', 'bedrooms', 'bathrooms'])
     
-    # 2. ÉP KIỂU SỐ TƯỜNG MINH (Quan trọng nhất)
+    # 2. ÉP KIỂU SỐ TƯỜNG MINH
     df['area'] = pd.to_numeric(df['area'], errors='coerce')
-    df = df.dropna(subset=['area']) # Loại bỏ những dòng area không phải là số
+    df['bedrooms'] = pd.to_numeric(df['bedrooms'], errors='coerce')
+    df['bathrooms'] = pd.to_numeric(df['bathrooms'], errors='coerce')
+    df = df.dropna(subset=['area', 'bedrooms', 'bathrooms']) 
     
-    # 3. Chỉ lấy đúng 2 cột features
-    X = df[['area', 'ward']].copy()
+    # 3. Lấy TẤT CẢ các cột features có giá trị
+    X = df[['area', 'bedrooms', 'bathrooms', 'ward', 'property_type']].copy()
     y = df['price_billion']
     
-    # 4. Dummy encoding
-    X = pd.get_dummies(X, columns=['ward'])
+    # 4. Dummy encoding (Mã hóa One-Hot cho cả Phường và Loại hình BĐS)
+    X = pd.get_dummies(X, columns=['ward', 'property_type'])
     
     return X, y
 
