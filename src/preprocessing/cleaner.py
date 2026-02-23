@@ -1,12 +1,12 @@
 # src/preprocessing/cleaner.py
 import pandas as pd
-import sqlite3
 import os
 import numpy as np
 import sys
 import re
 from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from src.database.postgres_manager import PostgresManager
 from src import config
 
 # --- CÁC HÀM TIỀN XỬ LÝ CƠ BẢN ---
@@ -128,15 +128,16 @@ def process_and_save():
     df_clean = df_clean.drop_duplicates(subset=['title', 'area', 'published_date'], keep='last')
     print(f"✅ Giữ lại {len(df_clean)}/{len(df)} tin hợp lệ.")
 
-    # Lưu kết quả
-    conn = sqlite3.connect(config.DB_PATH)
-    # Lấy các cột quan trọng để đẩy vào Model
     final_columns = ['title', 'price_billion', 'area', 'ward', 'property_type', 'bedrooms', 'bathrooms', 'published_date']
-    df_clean[final_columns].to_sql('listings', conn, if_exists='replace', index=False)
-    conn.close()
+    df_final = df_clean[final_columns]
+
+    # Khởi tạo DB Manager và lưu trữ
+    db = PostgresManager()
+    db.save_dataframe(df=df_final, table_name='listings', if_exists='replace')
     
-    df_clean[final_columns].to_csv(config.CLEANED_DATA_PATH, index=False, encoding='utf-8-sig')
-    print("💾 Đã lưu dữ liệu sạch (Đã bổ sung Phân loại BĐS & Phòng).")
+    # Lưu backup ra CSV (Tùy chọn)
+    df_final.to_csv(config.CLEANED_DATA_PATH, index=False, encoding='utf-8-sig')
+    print("✅ Hoàn tất Pipeline ETL.")
 
 if __name__ == "__main__":
     process_and_save()
