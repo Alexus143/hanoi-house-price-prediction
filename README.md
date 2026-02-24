@@ -1,112 +1,109 @@
-# 🏡 Hệ thống Phân tích & Định giá Bất động sản Hà Đông
+# 🏡 Hệ Thống Phân Tích & Định Giá Bất Động Sản Hà Đông
 
-Dự án là một hệ thống end-to-end (từ thu thập dữ liệu đến triển khai ứng dụng) nhằm mục đích crawl dữ liệu, phân tích và dự đoán giá bất động sản tại khu vực Hà Đông. Hệ thống được xây dựng với kiến trúc module hóa, tích hợp luồng ETL tự động và ứng dụng AI (Machine Learning) để định giá tự động thông qua giao diện web trực quan.
+Dự án là một hệ thống dữ liệu end-to-end (ETL Pipeline & Machine Learning) nhằm mục đích thu thập, làm sạch, phân tích và dự đoán giá bất động sản tại khu vực Hà Đông. Hệ thống sử dụng **PostgreSQL** làm cơ sở dữ liệu trung tâm, tích hợp cơ chế tự động hóa qua **Windows Task Scheduler**, và cung cấp giao diện tương tác trực quan qua Streamlit kết hợp với Trợ lý AI Gemini.
 
-## 🏗️ Kiến trúc Hệ thống
+## 🏗️ Kiến trúc Hệ thống & Luồng Dữ liệu
 
-Dự án được chia thành 4 luồng nghiệp vụ chính:
+Dự án được phân tách thành các module độc lập, quản lý luồng dữ liệu chuyên nghiệp:
 
-1. **Thu thập dữ liệu (Data Loading):** Tự động bóc tách dữ liệu từ các trang web bất động sản sử dụng Selenium (headless mode) và lưu trữ thành dạng raw.
-2. **Cơ sở dữ liệu (Database):** Lưu trữ và quản lý dữ liệu bằng **PostgreSQL** để đảm bảo tính ổn định và khả năng mở rộng của hệ thống.
-3. **Tiền xử lý & AI (Preprocessing & AI Engine):** Làm sạch dữ liệu, trích xuất đặc trưng bằng Regex và huấn luyện mô hình dự đoán. Đặc biệt, module *Cleaner* áp dụng các quy tắc nghiệp vụ chặt chẽ.
-4. **Giao diện người dùng (UI):** Tương tác với người dùng qua Streamlit, tích hợp cơ chế cache để tối ưu hóa thời gian phản hồi.
+1. **Data Extraction (Thu thập):** Cào dữ liệu tự động định kỳ bằng Selenium (headless) và lưu thô thành CSV.
+2. **Preprocessing & ETL (Tiền xử lý):** Module `cleaner.py` làm sạch văn bản, áp dụng các quy tắc nghiệp vụ khắt khe, tạo định danh duy nhất (MD5 Hash) và đồng bộ vào PostgreSQL qua cơ chế **Upsert**.
+3. **AI Engine (Định giá & Huấn luyện):** Module `train_model.py` load dữ liệu từ Database, tự động tinh chỉnh siêu tham số (Hyperparameter Tuning) và đánh giá mô hình bằng kỹ thuật Champion-Challenger.
+4. **User Interface (Giao diện):** Streamlit App (`app.py`) truy xuất dữ liệu từ PostgreSQL có sử dụng bộ nhớ đệm (Cache), hiển thị biểu đồ phân tích và tích hợp Chatbot AI tư vấn.
 
 ## 🛠️ Tech Stack
 
 * **Ngôn ngữ:** Python 3.x
-* **Data Extraction (Crawl):** Selenium
-* **Database:** PostgreSQL, psycopg2
-* **Data Processing:** Pandas, Numpy, Regex
-* **Machine Learning:** Scikit-Learn (RandomForestRegressor)
-* **Web Framework:** Streamlit
-* **Automation/ETL:** Windows Task Scheduler
+* **Cơ sở dữ liệu (Database):** PostgreSQL (Giao tiếp qua `PostgresManager` & `psycopg2`)
+* **Xử lý Dữ liệu (Data Manipulation):** Pandas, Numpy, Regex, Hashlib
+* **Machine Learning:** Scikit-Learn (`RandomForestRegressor`, `GridSearchCV`)
+* **Giao diện Web (UI):** Streamlit, Streamlit-Float
+* **Tích hợp AI:** Gemini API (Chatbot tư vấn)
+* **Tự động hóa (Automation):** Windows Task Scheduler
 
 ## 📂 Cấu trúc Thư mục
 
 ```text
-├── app.py                            # Khởi chạy giao diện Streamlit UI
+├── app.py                            # Khởi chạy giao diện Streamlit UI & cấu hình Cache
 ├── src/
 │   ├── config/
-│   │   ├── crawler.py                # Cấu hình tham số cho Spider/Crawler
+│   │   ├── crawler.py                # Tham số cho Spider/Crawler
 │   │   ├── database.py               # Cấu hình kết nối PostgreSQL
 │   │   └── path.py                   # Quản lý đường dẫn file tập trung
 │   ├── data_loader/
 │   │   ├── browser.py                # Khởi tạo Selenium Driver
 │   │   └── spider.py                 # Crawler bóc tách dữ liệu
 │   ├── database/
-│   │   └── postgres_manager.py       # Quản lý kết nối & thực thi Query DB
+│   │   └── postgres_manager.py       # Tương tác DB, xử lý Upsert dữ liệu
 │   ├── preprocessing/
-│   │   └── cleaner.py                # Xử lý logic, làm sạch dữ liệu & Regex
+│   │   └── cleaner.py                # Pipeline ETL, làm sạch dữ liệu & Regex
 │   ├── ai_engine/
-│   │   ├── train_model.py            # Huấn luyện & đánh giá mô hình ML
+│   │   ├── train_model.py            # Huấn luyện mô hình, Champion-Challenger evaluation
 │   │   ├── predictor.py              # Xử lý luồng dự đoán giá
-│   │   └── chatbot.py                # Tích hợp AI hỗ trợ người dùng
+│   │   └── chatbot.py                # Render Chatbot với Gemini API
 │   └── ui/
-│       ├── dashboard.py              # Giao diện báo cáo phân tích
-│       └── prediction.py             # Giao diện định giá BĐS
-├── data/                             # Chứa dữ liệu raw, clean và file mô hình (.pkl)
+│       ├── dashboard.py              # Giao diện biểu đồ thống kê
+│       └── prediction.py             # Giao diện nhập liệu định giá
+├── data/                             # Chứa dữ liệu thô (.csv) và file mô hình (.pkl)
 ├── requirements.txt
 └── README.md
 
 ```
 
-## 🧠 Tiền xử lý Dữ liệu (Module `cleaner.py`)
+## 🧠 Core Modules & Nghiệp Vụ Xử Lý
 
-Module `src/preprocessing/cleaner.py` đóng vai trò cốt lõi trong việc đảm bảo chất lượng dữ liệu đầu vào cho AI Engine:
+### 1. Module `cleaner.py` (ETL & NLP)
 
-* **Trích xuất đặc trưng (Feature Extraction):** Sử dụng các biểu thức chính quy (Regex) phức tạp để bóc tách các thông tin ẩn trong mô tả văn bản (ví dụ: diện tích, mặt tiền, số tầng).
-* **Quy tắc nghiệp vụ (Business Logic):** Xử lý chặt chẽ các trường hợp đặc thù, nổi bật là quy tắc: Nếu `property_type` là "Đất nền", hệ thống tự động ép buộc số phòng ngủ/số phòng tắm phải bằng `0` để tránh nhiễu dữ liệu.
+* **Quy tắc Nghiệp vụ Bắt buộc:** Hệ thống tự động phân loại bất động sản. Nếu `property_type` là "Đất nền", thuật toán ép buộc gán số lượng phòng ngủ/phòng tắm bằng `0` để không gây nhiễu cho mô hình.
+* **Trích xuất Đặc trưng (Feature Extraction):** Sử dụng Regex để đọc hiểu "ngôn ngữ môi giới" (vd: "3pn", "2wc") từ tiêu đề và mô tả nếu dữ liệu cào bị thiếu.
+* **Cơ chế Upsert Thông minh:** Tạo mã `listing_id` duy nhất bằng thuật toán mã hóa `hashlib.md5` dựa trên tiêu đề, diện tích và ngày đăng. Chỉ cập nhật (Upsert) dữ liệu vào PostgreSQL nếu có thay đổi, tránh duplicate hoàn toàn.
 
-## 🤖 AI Engine & Kết quả Mô hình
+### 2. Module `train_model.py` (AI Engine)
 
-Hệ thống sử dụng thuật toán **RandomForestRegressor** để dự đoán giá nhà.
+* **Thuật toán:** Sử dụng `RandomForestRegressor` kết hợp `GridSearchCV` (với K-Fold CV = 3) để tự động tìm ra các siêu tham số (`n_estimators`, `max_depth`, `min_samples_split`) tối ưu nhất.
+* **Cơ chế Champion - Challenger:** Mỗi khi hệ thống chạy lại pipeline huấn luyện, mô hình mới (Challenger) sẽ được so sánh độ sai số MAE (Mean Absolute Error) với mô hình hiện tại đang dùng (Champion). File `house_price_model.pkl` **chỉ bị ghi đè** nếu Challenger chiến thắng (MAE thấp hơn).
 
-* **Cơ chế Champion-Challenger:** Mô hình được huấn luyện lại theo chu kỳ khi có dữ liệu mới. Hệ thống sẽ tự động so sánh sai số tuyệt đối trung bình (MAE - Mean Absolute Error) của mô hình mới (Challenger) và mô hình hiện tại (Champion).
-* **Quy tắc cập nhật:** File `house_price_model.pkl` chỉ được lưu đè khi và chỉ khi mô hình mới thực sự mang lại độ chính xác cao hơn (MAE thấp hơn).
-* **Kết quả hiện tại:** Mô hình đạt độ chính xác ổn định, bám sát với giá thị trường khu vực Hà Đông (Chi tiết mức MAE và Accuracy % được log tự động sau mỗi phiên run ETL).
+### 3. Tối ưu Hiệu năng UI (`app.py`)
 
-## 🚀 Hướng dẫn Cài đặt & Vận hành
+* Sử dụng decorator `@st.cache_data(ttl=3600)` để lưu bộ nhớ đệm kết quả Query từ PostgreSQL trong 1 giờ. Đảm bảo Dashboard load tức thì mà không gây nghẽn kết nối Database.
 
-### 1. Cài đặt Môi trường
+## 🚀 Hướng Dẫn Cài Đặt & Vận Hành
+
+### Bước 1: Khởi tạo Môi trường
 
 ```bash
-# Clone repository
 git clone https://github.com/your-username/hanoi-house-price-prediction.git
 cd hanoi-house-price-prediction
-
-# Cài đặt thư viện
 pip install -r requirements.txt
 
 ```
 
-### 2. Cấu hình Cơ sở dữ liệu (PostgreSQL)
+### Bước 2: Cấu hình PostgreSQL & API Key
 
-Mở file `src/config/database.py` và cập nhật thông tin kết nối tới server PostgreSQL của bạn:
+1. **Database:** Mở file `src/config/database.py` và cập nhật thông số kết nối PostgreSQL (Host, Port, User, Password, DB Name). Mọi truy vấn DB trong dự án bắt buộc phải thông qua lớp `PostgresManager`.
+2. **Gemini API:** Tạo thư mục `.streamlit` ở thư mục gốc, tạo file `secrets.toml` và cấu hình key để kích hoạt AI Chatbot:
 
-```python
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_USER = "your_postgres_user"
-DB_PASSWORD = "your_password"
-DB_NAME = "real_estate_db"
+```toml
+# .streamlit/secrets.toml
+GEMINI_API_KEY = "your-google-gemini-api-key"
 
 ```
 
-*(Lưu ý: Luôn sử dụng `postgres_manager.py` cho các thao tác đọc/ghi vào DB, tuyệt đối không sử dụng SQLite).*
-
-### 3. Khởi chạy Ứng dụng Streamlit
+### Bước 3: Chạy Streamlit UI
 
 ```bash
 streamlit run app.py
 
 ```
 
-### 4. Triển khai ETL Pipeline tự động bằng Task Scheduler
+### Bước 4: Triển khai Tự Động Hóa (Windows Task Scheduler)
 
-Hệ thống thu thập và cập nhật dữ liệu hàng ngày không sử dụng các dịch vụ cloud CI/CD mà được thiết kế để chạy trực tiếp qua **Windows Task Scheduler** nhằm tối ưu chi phí và tận dụng tài nguyên cục bộ:
+Dự án sử dụng **Task Scheduler** để chạy luồng thu thập và cập nhật mô hình tự động hàng ngày (không dùng GitHub Actions):
 
-1. Mở **Task Scheduler** trên Windows.
-2. Chọn **Create Basic Task...**
-3. Thiết lập **Trigger** (ví dụ: Chạy hàng ngày vào lúc 2:00 AM).
-4. Ở tab **Action**, chọn *Start a program*.
-5. Trỏ đường dẫn đến file `.bat` hoặc `.vbs` (`run_pipeline.bat` / `run_hidden.vbs`) đã được chuẩn bị sẵn trong thư mục gốc. Script này sẽ tự động kích hoạt quá trình: `spider.py` -> lưu DB -> `cleaner.py` -> `train_model.py` (cập nhật model nếu qua bài test MAE).
+1. Mở **Task Scheduler** trên máy chủ/máy trạm Windows.
+2. Tạo **Basic Task** và thiết lập Trigger chạy hàng ngày (vd: 12:00 AM).
+3. Tại tab **Action**, chọn *Start a program*.
+4. Chỉ định file thực thi `.bat` (hoặc `.vbs` để chạy ngầm) chứa chuỗi lệnh ETL:
+* Chạy `src/data_loader/spider.py`
+* Chạy `src/preprocessing/cleaner.py` (Làm sạch & Upsert DB)
+* Chạy `src/ai_engine/train_model.py` (Retrain model)
