@@ -4,6 +4,9 @@ import subprocess
 import re
 import platform
 from src.config.crawler import IS_GITHUB_ACTIONS
+import sys
+# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
 
 def get_chrome_version():
     """

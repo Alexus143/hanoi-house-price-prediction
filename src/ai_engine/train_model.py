@@ -11,6 +11,9 @@ from sklearn.metrics import mean_absolute_error
 from src.config.path import MODEL_PATH
 from src.database.postgres_manager import PostgresManager
 
+# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+
 # Đường dẫn lưu Model Champion
 MODEL_PATH = MODEL_PATH
 

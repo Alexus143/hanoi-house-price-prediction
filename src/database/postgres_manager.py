@@ -6,6 +6,9 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.config.database import POSTGRES_URI
 
+# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+
 class PostgresManager:
     def __init__(self):
         """Khởi tạo kết nối tới PostgreSQL sử dụng SQLAlchemy Engine"""

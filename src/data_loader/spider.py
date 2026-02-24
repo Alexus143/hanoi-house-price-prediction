@@ -13,6 +13,9 @@ from src.config.crawler import BASE_URL
 from src.config.path import RAW_CSV_PATH
 from src.data_loader.browser import init_driver
 
+# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+
 def extract_card_data(card_element):
     """Hàm helper để bóc tách thông tin từ 1 thẻ HTML"""
     data = {}
@@ -90,5 +93,5 @@ def save_data(data):
 
 if __name__ == "__main__":
     # Điểm chạy test
-    data = run_crawler(pages=10)
+    data = run_crawler(pages=100)
     save_data(data)

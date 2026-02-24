@@ -10,6 +10,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from src.database.postgres_manager import PostgresManager
 from src.config.path import RAW_CSV_PATH, CLEANED_DATA_PATH
 
+# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+
 # --- CÁC HÀM TIỀN XỬ LÝ CƠ BẢN ---
 def extract_ward(location_str):
     if pd.isna(location_str): return "Khác"

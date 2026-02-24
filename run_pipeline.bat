@@ -1,4 +1,9 @@
 @echo off
+:: Thay đổi bảng mã của cmd sang UTF-8
+chcp 65001 >nul
+:: Ép Python sử dụng UTF-8 khi in dữ liệu ra file log
+set PYTHONIOENCODING=utf-8
+
 cd /d "D:\Python\realtime_estimate_tracker"
 call venv_bds\Scripts\activate
 
@@ -48,13 +53,9 @@ goto :end
 
 :error
 echo [%date% %time%] PIPELINE DUNG DO LOI >> logs\pipeline.log
+:: Mở file log để xem lỗi (chỉ hoạt động khi chạy trực tiếp, không qua VBS)
+start notepad logs\pipeline.log
 exit /b 1
 
 :end
 exit /b 0
-
-:error
-echo [%date% %time%] PIPELINE DUNG DO LOI >> logs\pipeline.log
-:: Mở file log để xem lỗi (chỉ hoạt động khi chạy trực tiếp, không qua VBS)
-start notepad logs\pipeline.log
-exit /b 1

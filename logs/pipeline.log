@@ -1,0 +1,184 @@
+========================================= 
+[Tue 02/24/2026 11:06:43.80] BAT DAU PIPELINE 
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "D:\Python\realtime_estimate_tracker\src\data_loader\spider.py", line 93, in <module>
+    data = run_crawler(pages=10)
+  File "D:\Python\realtime_estimate_tracker\src\data_loader\spider.py", line 50, in run_crawler
+    driver = init_driver()
+  File "D:\Python\realtime_estimate_tracker\src\data_loader\browser.py", line 65, in init_driver
+    print("[Browser] \u0110ang kh\u1edfi t\u1ea1o tr�nh duy\u1ec7t...")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0110' in position 10: character maps to <undefined>
+[Tue 02/24/2026 11:06:44.99] LOI: Spider that bai. Dung pipeline. 
+[Tue 02/24/2026 11:06:45.01] PIPELINE DUNG DO LOI 
+========================================= 
+[Tue 02/24/2026 11:18:08.98] BAT DAU PIPELINE 
+[Browser] Đang khởi tạo trình duyệt...
+Phát hiện Chrome (Windows): Version 139
+[Spider] Đang cào trang 1/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong
+[Spider] Đang cào trang 2/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p2
+[Spider] Đang cào trang 3/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p3
+[Spider] Đang cào trang 4/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p4
+[Spider] Đang cào trang 5/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p5
+[Spider] Đang cào trang 6/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p6
+[Spider] Đang cào trang 7/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p7
+[Spider] Đang cào trang 8/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p8
+[Spider] Đang cào trang 9/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p9
+[Spider] Đang cào trang 10/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p10
+[Spider] Đã lưu 132 dòng vào: D:\Python\realtime_estimate_tracker\data\batdongsan_data.csv
+Đang đọc dữ liệu thô...
+Tổng số dòng thô: 19963
+🧠 Đang áp dụng NLP trích xuất Đặc trưng & Phân loại...
+✅ Giữ lại 9000/19963 tin hợp lệ.
+✅ Giữ lại 8972/19963 tin hợp lệ.
+✅ Đã kết nối thành công tới PostgreSQL.
+Đang thực hiện Upsert dữ liệu vào PostgreSQL...
+✅ Hoàn tất Pipeline ETL.
+🔄 Đang lấy dữ liệu từ PostgreSQL...
+✅ Đã kết nối thành công tới PostgreSQL.
+✅ Đã tải 10461 bản ghi để huấn luyện.
+🧠 Đang chia tập dữ liệu và thiết lập Cross-Validation...
+⏳ Đang huấn luyện (Tìm kiếm siêu tham số tối ưu)...
+Fitting 3 folds for each of 12 candidates, totalling 36 fits
+✅ Tham số tối ưu: {'max_depth': None, 'min_samples_split': 2, 'n_estimators': 200}
+📊 MAE của Challenger Model: 3.0464 Tỷ VNĐ
+🥊 Đang so sánh... Champion MAE: 3.3729 vs Challenger MAE: 3.0464
+🏆 Challenger chiến thắng! Cập nhật mô hình mới vào hệ thống.
+💾 Đã lưu tại: D:\Python\realtime_estimate_tracker\data\house_price_model.pkl
+[main b252a5c] Auto-update: Tue 02/24/2026 11:26:55.78
+ 3 files changed, 2461 insertions(+), 1506 deletions(-)
+To https://github.com/Alexus143/hanoi-house-price-prediction.git
+   db9dfd2..b252a5c  main -> main
+========================================= 
+[Tue 02/24/2026 11:30:19.26] BAT DAU PIPELINE 
+[Browser] Đang khởi tạo trình duyệt...
+Phát hiện Chrome (Windows): Version 139
+[Spider] Đang cào trang 1/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong
+[Spider] Đang cào trang 2/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p2
+[Spider] Đang cào trang 3/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p3
+[Spider] Đang cào trang 4/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p4
+[Spider] Đang cào trang 5/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p5
+[Spider] Đang cào trang 6/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p6
+[Spider] Đang cào trang 7/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p7
+[Spider] Đang cào trang 8/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p8
+[Spider] Đang cào trang 9/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p9
+[Spider] Đang cào trang 10/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p10
+[Spider] Đang cào trang 11/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p11
+[Spider] Đang cào trang 12/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p12
+[Spider] Đang cào trang 13/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p13
+[Spider] Đang cào trang 14/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p14
+[Spider] Đang cào trang 15/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p15
+[Spider] Đang cào trang 16/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p16
+[Spider] Đang cào trang 17/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p17
+[Spider] Đang cào trang 18/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p18
+[Spider] Đang cào trang 19/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p19
+[Spider] Đang cào trang 20/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p20
+[Spider] Đang cào trang 21/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p21
+[Spider] Đang cào trang 22/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p22
+[Spider] Đang cào trang 23/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p23
+[Spider] Đang cào trang 24/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p24
+[Spider] Đang cào trang 25/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p25
+[Spider] Đang cào trang 26/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p26
+[Spider] Đang cào trang 27/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p27
+[Spider] Đang cào trang 28/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p28
+[Spider] Đang cào trang 29/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p29
+[Spider] Đang cào trang 30/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p30
+[Spider] Đang cào trang 31/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p31
+[Spider] Đang cào trang 32/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p32
+[Spider] Đang cào trang 33/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p33
+[Spider] Đang cào trang 34/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p34
+[Spider] Đang cào trang 35/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p35
+[Spider] Đang cào trang 36/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p36
+[Spider] Đang cào trang 37/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p37
+[Spider] Đang cào trang 38/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p38
+[Spider] Đang cào trang 39/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p39
+[Spider] Đang cào trang 40/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p40
+[Spider] Đang cào trang 41/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p41
+[Spider] Đang cào trang 42/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p42
+[Spider] Đang cào trang 43/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p43
+[Spider] Đang cào trang 44/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p44
+[Spider] Đang cào trang 45/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p45
+[Spider] Đang cào trang 46/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p46
+[Spider] Đang cào trang 47/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p47
+[Spider] Đang cào trang 48/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p48
+[Spider] Đang cào trang 49/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p49
+[Spider] Đang cào trang 50/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p50
+[Spider] Đang cào trang 51/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p51
+[Spider] Đang cào trang 52/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p52
+[Spider] Đang cào trang 53/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p53
+[Spider] Đang cào trang 54/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p54
+[Spider] Đang cào trang 55/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p55
+[Spider] Đang cào trang 56/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p56
+[Spider] Đang cào trang 57/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p57
+[Spider] Đang cào trang 58/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p58
+[Spider] Đang cào trang 59/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p59
+[Spider] Đang cào trang 60/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p60
+[Spider] Đang cào trang 61/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p61
+[Spider] Đang cào trang 62/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p62
+[Spider] Đang cào trang 63/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p63
+[Spider] Đang cào trang 64/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p64
+[Spider] Đang cào trang 65/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p65
+[Spider] Đang cào trang 66/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p66
+[Spider] Đang cào trang 67/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p67
+[Spider] Đang cào trang 68/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p68
+[Spider] Đang cào trang 69/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p69
+[Spider] Đang cào trang 70/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p70
+[Spider] Đang cào trang 71/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p71
+[Spider] Đang cào trang 72/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p72
+[Spider] Đang cào trang 73/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p73
+[Spider] Đang cào trang 74/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p74
+[Spider] Đang cào trang 75/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p75
+[Spider] Đang cào trang 76/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p76
+[Spider] Đang cào trang 77/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p77
+[Spider] Đang cào trang 78/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p78
+[Spider] Đang cào trang 79/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p79
+[Spider] Đang cào trang 80/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p80
+[Spider] Đang cào trang 81/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p81
+[Spider] Đang cào trang 82/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p82
+[Spider] Đang cào trang 83/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p83
+[Spider] Đang cào trang 84/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p84
+[Spider] Đang cào trang 85/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p85
+[Spider] Đang cào trang 86/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p86
+[Spider] Đang cào trang 87/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p87
+[Spider] Đang cào trang 88/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p88
+[Spider] Đang cào trang 89/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p89
+[Spider] Đang cào trang 90/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p90
+[Spider] Đang cào trang 91/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p91
+[Spider] Đang cào trang 92/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p92
+[Spider] Đang cào trang 93/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p93
+[Spider] Đang cào trang 94/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p94
+[Spider] Đang cào trang 95/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p95
+[Spider] Đang cào trang 96/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p96
+[Spider] Đang cào trang 97/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p97
+[Spider] Đang cào trang 98/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p98
+[Spider] Đang cào trang 99/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p99
+[Spider] Đang cào trang 100/100: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p100
+[Spider] Đã lưu 2134 dòng vào: D:\Python\realtime_estimate_tracker\data\batdongsan_data.csv
+Đang đọc dữ liệu thô...
+Tổng số dòng thô: 22097
+🧠 Đang áp dụng NLP trích xuất Đặc trưng & Phân loại...
+✅ Giữ lại 9354/22097 tin hợp lệ.
+✅ Giữ lại 9326/22097 tin hợp lệ.
+✅ Đã kết nối thành công tới PostgreSQL.
+Đang thực hiện Upsert dữ liệu vào PostgreSQL...
+✅ Hoàn tất Pipeline ETL.
+🔄 Đang lấy dữ liệu từ PostgreSQL...
+✅ Đã kết nối thành công tới PostgreSQL.
+✅ Đã tải 10815 bản ghi để huấn luyện.
+🧠 Đang chia tập dữ liệu và thiết lập Cross-Validation...
+⏳ Đang huấn luyện (Tìm kiếm siêu tham số tối ưu)...
+Fitting 3 folds for each of 12 candidates, totalling 36 fits
+✅ Tham số tối ưu: {'max_depth': None, 'min_samples_split': 2, 'n_estimators': 100}
+📊 MAE của Challenger Model: 2.9133 Tỷ VNĐ
+🥊 Đang so sánh... Champion MAE: 3.0464 vs Challenger MAE: 2.9133
+🏆 Challenger chiến thắng! Cập nhật mô hình mới vào hệ thống.
+💾 Đã lưu tại: D:\Python\realtime_estimate_tracker\data\house_price_model.pkl
+[main d8d8c48] Auto-update: Tue 02/24/2026 12:03:55.27
+ 3 files changed, 3588 insertions(+), 1100 deletions(-)
+To https://github.com/Alexus143/hanoi-house-price-prediction.git
+   b252a5c..d8d8c48  main -> main
