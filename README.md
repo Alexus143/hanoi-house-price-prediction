@@ -72,7 +72,7 @@ Dự án được phân tách thành các module độc lập, quản lý luồn
 ### Bước 1: Khởi tạo Môi trường
 
 ```bash
-git clone https://github.com/your-username/hanoi-house-price-prediction.git
+git clone https://github.com/Alexus143/hanoi-house-price-prediction.git
 cd hanoi-house-price-prediction
 pip install -r requirements.txt
 
