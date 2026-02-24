@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- IMPORT MODULES CỦA BẠN ---
-from src.ai_engine.chatbot import render_chatbot
+from src.ui.chat_component import render_chatbot # <-- Cập nhật import từ module giao diện (UI)
 from src.ui.dashboard import render_dashboard
 from src.ui.prediction import render_prediction
 from src.database.postgres_manager import PostgresManager # Import module kết nối DB mới
@@ -54,7 +54,7 @@ with tab1:
 with tab2:
     render_prediction(df)
 
-# CHATBOT (MODULE RIÊNG)
+# CHATBOT (MODULE GIAO DIỆN NỔI)
 API_KEY = os.getenv("GEMINI_API_KEY")
 
 if API_KEY:

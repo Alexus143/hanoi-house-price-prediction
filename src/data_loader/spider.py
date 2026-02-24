@@ -82,7 +82,7 @@ def run_crawler(pages=2, max_retries=3):
                                 data = extract_card_data(card)
                                 if data['title']:  
                                     results.append(data)
-                            except Exception: 
+                            except Exception as e:
                                 continue
                         break # Thoát vòng lặp retry vì đã lấy được dữ liệu thành công
                         
