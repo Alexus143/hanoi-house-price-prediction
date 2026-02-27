@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 def render_dashboard(df):
     """Hàm hiển thị Tab Thống kê với biểu đồ tương tác Plotly"""
@@ -31,13 +32,12 @@ def render_dashboard(df):
         df_display = df_display[df_display['property_type'] == chon_loai]
 
     with col_filter3:
-        # Bẫy lỗi: Xử lý an toàn khi df_display rỗng
+        # Xử lý an toàn khi df_display rỗng
         if df_display.empty or df_display['price_billion'].isna().all():
             st.warning("Không có dữ liệu cho khu vực/loại hình này.")
-            return # Dừng render phần còn lại nếu không có dữ liệu
+            return
             
         max_price_db = float(df_display['price_billion'].max())
-        # Tránh trường hợp max_price_db = 0 dẫn đến lỗi thanh trượt
         if max_price_db <= 0: max_price_db = 1.0 
         
         default_max = float(df_display['price_billion'].quantile(0.95))
@@ -47,7 +47,7 @@ def render_dashboard(df):
     df_final = df_display[
         (df_display['price_billion'] >= price_range[0]) & 
         (df_display['price_billion'] <= price_range[1])
-    ]
+    ].copy()
 
     st.markdown("---")
 
@@ -60,22 +60,49 @@ def render_dashboard(df):
         avg_price_m2 = (df_final['price_billion'].sum() * 1000) / df_final['area'].sum()
         c3.metric("Đơn giá trung bình", f"{avg_price_m2:.1f} Triệu/m2")
         
-        # 3. BIỂU ĐỒ TƯƠNG TÁC BẰNG PLOTLY
-        st.markdown("<br>", unsafe_allow_html=True) # Tạo khoảng trắng nhỏ
+        # 3. HỆ THỐNG BIỂU ĐỒ TRỰC QUAN HÓA
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Hàng biểu đồ 1
         chart_col1, chart_col2 = st.columns(2)
         
         with chart_col1:
-            # Biểu đồ Histogram: Phân bố giá
-            fig_hist = px.histogram(
-                df_final, 
-                x="price_billion", 
-                nbins=30, 
-                title=f"Phân bố mức giá tại {chon_phuong}",
-                labels={"price_billion": "Giá (Tỷ VNĐ)"},
-                color_discrete_sequence=['#2E86C1']
-            )
-            fig_hist.update_layout(yaxis_title="Số lượng tin")
-            st.plotly_chart(fig_hist, width='stretch')
+            # Biểu đồ Line: Biến động đơn giá theo thời gian
+            if 'scraped_date' in df_final.columns and 'price_billion' in df_final.columns and 'area' in df_final.columns:
+                
+                # Tính toán cột đơn giá (Triệu VNĐ / m2)
+                # Sử dụng np.where để tránh lỗi ZeroDivisionError nếu area = 0
+                df_final['price_per_m2'] = np.where(
+                    df_final['area'] > 0, 
+                    (df_final['price_billion'] * 1000) / df_final['area'], 
+                    np.nan
+                )
+                
+                # Xử lý ngày tháng
+                df_final['scraped_date_clean'] = pd.to_datetime(df_final['scraped_date'], errors='coerce')
+                
+                # Loại bỏ các dòng thiếu ngày tháng hoặc thiếu đơn giá
+                df_time = df_final.dropna(subset=['scraped_date_clean', 'price_per_m2'])
+                
+                if not df_time.empty:
+                    # Nhóm dữ liệu theo ngày và tính trung bình đơn giá
+                    df_trend = df_time.groupby(df_time['scraped_date_clean'].dt.date)['price_per_m2'].mean().reset_index()
+                    df_trend = df_trend.rename(columns={'scraped_date_clean': 'Ngày', 'price_per_m2': 'Đơn giá TB (Triệu/m²)'})
+                    df_trend = df_trend.sort_values('Ngày')
+
+                    fig_trend = px.line(
+                        df_trend, 
+                        x="Ngày", 
+                        y="Đơn giá TB (Triệu/m²)", 
+                        title=f"Biến động đơn giá trung bình theo thời gian tại {chon_phuong}",
+                        markers=True,
+                        color_discrete_sequence=['#E74C3C']
+                    )
+                    st.plotly_chart(fig_trend, width='stretch')
+                else:
+                    st.info("Không có dữ liệu hợp lệ để vẽ biểu đồ biến động đơn giá.")
+            else:
+                st.warning("Dữ liệu thiếu cột 'price_billion' hoặc 'area' để tính đơn giá.")
             
         with chart_col2:
             # Biểu đồ Scatter: Tương quan Diện tích - Giá tiền
@@ -93,19 +120,61 @@ def render_dashboard(df):
                 opacity=0.7
             )
             st.plotly_chart(fig_scatter, width='stretch')
-        
-        # 4. BẢNG DỮ LIỆU CHI TIẾT
-        st.subheader("📋 Dữ liệu chi tiết")
-        
-        # Sắp xếp các cột quan trọng lên đầu để dễ nhìn
-        display_columns = ['title', 'price_billion', 'area', 'ward', 'property_type', 'bedrooms', 'bathrooms', 'published_date']
-        # Chỉ lấy các cột thực sự tồn tại trong df
-        display_columns = [c for c in display_columns if c in df_final.columns]
-        
-        st.dataframe(
-            df_final[display_columns].sort_values('price_billion', ascending=False),
-            width='stretch',
-            hide_index=True
-        )
+
+        # Hàng biểu đồ 2
+        st.markdown("<br>", unsafe_allow_html=True)
+        chart_col3, chart_col4 = st.columns(2)
+
+        with chart_col3:
+            # Biểu đồ Boxplot: Phân bố giá theo loại hình
+            if 'property_type' in df_final.columns:
+                fig_box = px.box(
+                    df_final, 
+                    x="property_type", 
+                    y="price_billion", 
+                    color="property_type",
+                    title="Phân bố khoảng giá theo Loại hình",
+                    labels={
+                        "property_type": "Loại hình", 
+                        "price_billion": "Giá (Tỷ VNĐ)"
+                    }
+                )
+                st.plotly_chart(fig_box, width='stretch')
+
+        with chart_col4:
+            # Tính toán đơn giá/m2 cho biểu đồ Bar
+            df_final['price_per_m2'] = (df_final['price_billion'] * 1000) / df_final['area']
+            
+            if chon_phuong == "Tất cả":
+                # Đơn giá trung bình theo Phường
+                df_ward_price = df_final.groupby('ward')['price_per_m2'].mean().reset_index()
+                df_ward_price = df_ward_price.sort_values('price_per_m2', ascending=False).head(15) # Lấy top 15 để biểu đồ không bị rối
+                
+                fig_bar = px.bar(
+                    df_ward_price, 
+                    x="ward", 
+                    y="price_per_m2", 
+                    title="Đơn giá trung bình (Triệu/m2) theo Phường",
+                    labels={"ward": "Phường/Xã", "price_per_m2": "Đơn giá (Triệu/m2)"},
+                    color="price_per_m2",
+                    color_continuous_scale="Blues"
+                )
+                st.plotly_chart(fig_bar, width='stretch')
+            else:
+                # Đơn giá trung bình theo Loại hình (khi đã lọc 1 phường cụ thể)
+                if 'property_type' in df_final.columns:
+                    df_type_price = df_final.groupby('property_type')['price_per_m2'].mean().reset_index()
+                    df_type_price = df_type_price.sort_values('price_per_m2', ascending=False)
+                    
+                    fig_bar = px.bar(
+                        df_type_price, 
+                        x="property_type", 
+                        y="price_per_m2", 
+                        title=f"Đơn giá trung bình (Triệu/m2) theo Loại hình",
+                        labels={"property_type": "Loại hình", "price_per_m2": "Đơn giá (Triệu/m2)"},
+                        color="price_per_m2",
+                        color_continuous_scale="Blues"
+                    )
+                    st.plotly_chart(fig_bar, width='stretch')
     else:
         st.info("💡 Không tìm thấy tin bất động sản nào phù hợp với bộ lọc hiện tại.")
