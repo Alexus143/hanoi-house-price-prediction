@@ -22,7 +22,8 @@ class PricePredictor:
     def is_ready(self):
         return self.model is not None
 
-    def predict_single(self, area, bedrooms, bathrooms, ward, property_type):
+    def predict_single(self, area, bedrooms, bathrooms, ward, property_type, 
+                       frontage, road_width, direction, floors, legal_status, furniture):
         """
         Nhận tham số thô từ UI, xử lý Feature Alignment và trả về giá dự đoán.
         """
@@ -32,25 +33,32 @@ class PricePredictor:
         # 1. Tạo DataFrame đầu vào rỗng với cấu trúc cột chuẩn từ lúc Train
         input_df = pd.DataFrame(0, index=[0], columns=self.features)
         
-        # 2. Điền các biến số lượng
+        # 2. Điền các biến số lượng (Numerical)
         input_df['area'] = area
         input_df['bedrooms'] = bedrooms
         input_df['bathrooms'] = bathrooms
+        input_df['frontage'] = frontage
+        input_df['road_width'] = road_width
+        input_df['floors'] = floors
         
-        # 3. Kỹ thuật Feature Alignment cho biến phân loại
-        ward_col = f'ward_{ward}'
-        type_col = f'property_type_{property_type}'
+        # 3. Kỹ thuật Feature Alignment cho TẤT CẢ biến phân loại (Categorical)
+        categorical_inputs = {
+            'ward': ward,
+            'property_type': property_type,
+            'direction': direction,
+            'legal_status': legal_status,
+            'furniture': furniture
+        }
         
-        if ward_col in input_df.columns:
-            input_df[ward_col] = 1
-        if type_col in input_df.columns:
-            input_df[type_col] = 1
+        for col_prefix, value in categorical_inputs.items():
+            expected_col_name = f"{col_prefix}_{value}"
+            if expected_col_name in input_df.columns:
+                input_df[expected_col_name] = 1
 
-        # 4. Thực hiện dự đoán (LƯU Ý: Model giờ dự đoán ĐƠN GIÁ - Tỷ/m2)
+        # 4. Thực hiện dự đoán (ĐƠN GIÁ - Tỷ/m2)
         pred_unit_price = self.model.predict(input_df)[0]
         
         # 5. Quy đổi ra TỔNG GIÁ (Tỷ VNĐ)
         pred_total_price = pred_unit_price * area
         
-        # Trả về Tổng giá, Đơn giá và MAE
         return pred_total_price, pred_unit_price, self.mae

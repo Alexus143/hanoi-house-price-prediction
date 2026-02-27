@@ -12,15 +12,15 @@ from src.config.path import MODEL_PATH
 from src.database.postgres_manager import PostgresManager
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
-# Ép Python xuất dữ liệu text ra terminal hoặc file log bằng chuẩn UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
 
 def load_data_from_db():
     print("🔄 Đang lấy dữ liệu từ PostgreSQL...")
     db = PostgresManager()
+    # THÊM 6 FEATURE MỚI VÀO CÂU TRUY VẤN
     query = """
-        SELECT price_billion, area, ward, property_type, bedrooms, bathrooms 
+        SELECT price_billion, area, ward, property_type, bedrooms, bathrooms,
+               frontage, road_width, direction, floors, legal_status, furniture
         FROM listings 
         WHERE price_billion IS NOT NULL AND area IS NOT NULL
     """
@@ -30,52 +30,61 @@ def load_data_from_db():
 
 def preprocess_features(df):
     """Xử lý One-Hot Encoding và thiết lập biến mục tiêu Đơn Giá"""
-    # 1. TẠO BIẾN MỤC TIÊU MỚI: Đơn giá (Tỷ / m2)
-    df['unit_price'] = df['price_billion'] / df['area']
+    print("🧠 Đang tiền xử lý dữ liệu và làm sạch Features mới...")
     
-    # 2. Định nghĩa y: Giữ cả unit_price (để train) và price_billion (để test)
+    # --- XỬ LÝ FEATURE SỐ (NUMERICAL) ---
+    # Dùng Regex bóc tách con số từ chuỗi text cào được (VD: "5 m" -> 5.0)
+    df['frontage'] = df['frontage'].astype(str).str.extract(r'(\d+\.?\d*)').astype(float)
+    df['road_width'] = df['road_width'].astype(str).str.extract(r'(\d+\.?\d*)').astype(float)
+    df['floors'] = df['floors'].astype(str).str.extract(r'(\d+)').astype(float)
+
+    # Điền giá trị khuyết thiếu (Missing Data) bằng giá trị trung vị (Median)
+    df['frontage'] = df['frontage'].fillna(df['frontage'].median() if pd.notna(df['frontage'].median()) else 4.0)
+    df['road_width'] = df['road_width'].fillna(df['road_width'].median() if pd.notna(df['road_width'].median()) else 3.0)
+    df['floors'] = df['floors'].fillna(df['floors'].median() if pd.notna(df['floors'].median()) else 3.0)
+
+    # --- XỬ LÝ FEATURE PHÂN LOẠI (CATEGORICAL) ---
+    cat_cols = ['ward', 'property_type', 'direction', 'legal_status', 'furniture']
+    for col in ['direction', 'legal_status', 'furniture']:
+        df[col] = df[col].fillna('Không xác định') # Nếu trống thì quy về Không xác định
+
+    # --- TẠO BIẾN MỤC TIÊU ---
+    df['unit_price'] = df['price_billion'] / df['area']
     y = df[['unit_price', 'price_billion']]
     
-    # 3. Định nghĩa X: Bỏ các cột liên quan đến giá, giữ lại area
+    # Bỏ cột giá khỏi tập Features
     X = df.drop(columns=['price_billion', 'unit_price'])
     
-    # One-hot encoding cho Phường/Xã và Loại hình BĐS
-    X_encoded = pd.get_dummies(X, columns=['ward', 'property_type'], drop_first=True)
+    # One-hot encoding toàn bộ biến phân loại
+    X_encoded = pd.get_dummies(X, columns=cat_cols, drop_first=True)
     return X_encoded, y
 
 def train_and_evaluate(X, y):
     print("🧠 Đang chia tập dữ liệu và thiết lập Cross-Validation...")
-    # Chia test/train. Do truyền y (có 2 cột) nên y_train và y_test cũng sẽ giữ 2 cột này
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     rf = RandomForestRegressor(random_state=42)
 
     param_grid = {
-        'n_estimators': [200, 300],          # 200-300 cây là đủ, tập trung tối ưu cấu trúc cây
-        'max_depth': [10, 15, 20],           # TUYỆT ĐỐI KHÔNG DÙNG None. Khống chế độ sâu để tăng tính tổng quát
-        'min_samples_split': [5, 10],        # Số mẫu tối thiểu để chẻ nhánh
-        'min_samples_leaf': [2, 4, 6],       # 🌟 QUAN TRỌNG: Bắt buộc mỗi node lá cuối cùng phải chứa ít nhất 2-6 căn nhà. Giúp loại bỏ các dự đoán dựa trên 1 căn duy nhất (outlier).
-        'max_features': [1.0, 'sqrt']        # Thử nghiệm giới hạn số lượng feature khi chia nhánh để chống đa cộng tuyến
+        'n_estimators': [200, 300],          
+        'max_depth': [10, 15, 20],           
+        'min_samples_split': [5, 10],        
+        'min_samples_leaf': [2, 4, 6],       
+        'max_features': [1.0, 'sqrt']        
     }
 
     grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, 
                                cv=3, scoring='neg_mean_absolute_error', n_jobs=-1, verbose=1)
     
     print("⏳ Đang huấn luyện (Học cách dự đoán ĐƠN GIÁ)...")
-    # CHỈ TRUYỀN 'unit_price' VÀO ĐỂ HUẤN LUYỆN
     grid_search.fit(X_train, y_train['unit_price'])
     
     challenger_model = grid_search.best_estimator_
     print(f"✅ Tham số tối ưu: {grid_search.best_params_}")
 
-    # --- ĐÁNH GIÁ (INFERENCE SIMULATION) ---
-    # 1. Dự đoán ra Đơn giá cho tập Test
+    # ĐÁNH GIÁ TRÊN TỔNG GIÁ
     y_pred_unit = challenger_model.predict(X_test)
-    
-    # 2. Quy đổi ra Tổng giá: Đơn giá dự đoán * Diện tích thực tế
     y_pred_total = y_pred_unit * X_test['area']
-    
-    # 3. Tính MAE so với Tổng giá thực tế ban đầu
     challenger_mae = mean_absolute_error(y_test['price_billion'], y_pred_total)
     
     print(f"📊 MAE của Challenger Model (Trên Tổng giá): {challenger_mae:.4f} Tỷ VNĐ")
@@ -83,7 +92,6 @@ def train_and_evaluate(X, y):
     return challenger_model, challenger_mae, X.columns
 
 def champion_challenger_evaluation(challenger_model, challenger_mae, feature_columns):
-    """So sánh với model hiện tại (nếu có) và quyết định lưu đè"""
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     
     if os.path.exists(MODEL_PATH):
@@ -106,11 +114,7 @@ def champion_challenger_evaluation(challenger_model, challenger_mae, feature_col
         save_model(challenger_model, challenger_mae, feature_columns)
 
 def save_model(model, mae, columns):
-    model_data = {
-        'model': model,
-        'mae': mae,
-        'features': list(columns)
-    }
+    model_data = {'model': model, 'mae': mae, 'features': list(columns)}
     joblib.dump(model_data, MODEL_PATH)
     print(f"💾 Đã lưu tại: {MODEL_PATH}")
 
