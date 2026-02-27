@@ -19,8 +19,8 @@ sys.stdout.reconfigure(encoding='utf-8')
 def extract_ward(location_str):
     if pd.isna(location_str): return "Khác"
     parts = location_str.split(',') 
-    if len(parts) > 1: return parts[0].strip()
-    return location_str.strip()
+    ward = parts[0].strip() if len(parts) > 1 else location_str.strip()
+    return ward.replace('.', '').strip()
 
 def clean_price(price_str):
     if pd.isna(price_str): return None
