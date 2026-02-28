@@ -1,4 +1,3 @@
-```markdown
 # 🏡 Hệ Thống Phân Tích & Định Giá Bất Động Sản Hà Đông
 
 Dự án là một hệ thống dữ liệu end-to-end (ETL Pipeline & Machine Learning) tự động cào dữ liệu, làm sạch, lưu trữ và huấn luyện mô hình AI để định giá bất động sản tại quận Hà Đông theo thời gian thực. Hệ thống sử dụng kiến trúc 2 luồng Pipeline bất đồng bộ để tối ưu tài nguyên và vượt qua các cơ chế Anti-bot, với PostgreSQL làm cơ sở dữ liệu trung tâm.
