@@ -75,6 +75,8 @@ Hệ thống được phân tách thành các module độc lập, hoạt độn
 ├── automation/                       
 ├── requirements.txt
 └── README.md
+
+
 🧠 Quy tắc Nghiệp vụ Bắt buộc (ETL & NLP)
 Xử lý ngoại lệ "Đất nền": Hệ thống tự động phân loại bất động sản. Nếu property_type là "Đất nền", thuật toán ép buộc gán số lượng phòng ngủ/phòng tắm bằng 0 để tránh gây nhiễu cho mô hình.
 
