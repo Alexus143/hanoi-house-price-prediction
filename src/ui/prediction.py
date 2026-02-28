@@ -20,7 +20,7 @@ def render_prediction(df):
         return
 
     st.write("Nhập thông số căn nhà bạn muốn mua/bán, AI sẽ gợi ý mức giá hợp lý.")
-    st.caption(f"💡 Hệ thống đang sử dụng mô hình Random Forest (Sai số chuẩn MAE: **{predictor.mae:.2f} Tỷ VNĐ**)")
+    st.caption(f"Hệ thống đang sử dụng mô hình Random Forest (Sai số chuẩn MAE: **{predictor.mae:.2f} Tỷ VNĐ**)")
     
     # --- Trích xuất danh mục động từ Database để nạp vào SelectBox ---
     valid_wards = sorted(df['ward'].dropna().unique().tolist())
@@ -45,7 +45,7 @@ def render_prediction(df):
         in_floors = st.number_input("Số tầng:", value=0 if is_land else 3, min_value=0, step=1, disabled=is_land)
 
     # Dùng Expander để giấu đi thông tin nâng cao, làm UI bớt rườm rà
-    with st.expander("🛠️ 2. Thông số thặng dư (Nâng cao) - Giúp AI định giá chuẩn hơn", expanded=True):
+    with st.expander("2. Thông số thặng dư (Nâng cao) - Giúp AI định giá chuẩn hơn", expanded=True):
         col3, col4 = st.columns(2)
         with col3:
             in_frontage = st.number_input("Mặt tiền (m):", min_value=1.0, value=4.0, step=0.5, help="Chiều rộng mặt trước nhà")
@@ -55,7 +55,7 @@ def render_prediction(df):
             in_legal = st.selectbox("Pháp lý:", valid_legals)
             in_furniture = st.selectbox("Nội thất:", valid_furnitures)
 
-    if st.button("🔮 Định giá ngay", type="primary", use_container_width=True):
+    if st.button("Định giá ngay", type="primary", use_container_width=True):
         try:
             # Truyền TẤT CẢ biến vào Predictor
             pred_price, pred_unit_price, mae = predictor.predict_single(
@@ -67,7 +67,7 @@ def render_prediction(df):
             
             pred_m2_display = pred_unit_price * 1000
             
-            st.success(f"💰 Mức giá khuyến nghị: **{pred_price:.2f} Tỷ VNĐ**")
+            st.success(f"Mức giá khuyến nghị: **{pred_price:.2f} Tỷ VNĐ**")
             st.caption(f"Đơn giá tương đương: **{pred_m2_display:.1f} Triệu/m2**")
             
             # Tính năng so sánh trung bình khu vực
@@ -75,9 +75,9 @@ def render_prediction(df):
             if pd.notna(avg_area_price):
                 diff = pred_price - avg_area_price
                 if diff > 0:
-                    st.info(f"📈 Cao hơn mức trung bình của {in_type} tại {in_ward} khoảng {diff:.2f} Tỷ")
+                    st.info(f"Cao hơn mức trung bình của {in_type} tại {in_ward} khoảng {diff:.2f} Tỷ")
                 elif diff < 0:
-                    st.info(f"📉 Thấp hơn mức trung bình của {in_type} tại {in_ward} khoảng {abs(diff):.2f} Tỷ")
+                    st.info(f"Thấp hơn mức trung bình của {in_type} tại {in_ward} khoảng {abs(diff):.2f} Tỷ")
                     
         except Exception as e:
             st.error(f"Lỗi khi dự đoán: {e}")

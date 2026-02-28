@@ -190,5 +190,5 @@ def save_data(data):
         print(f"[Spider] Đã tạo file mới và lưu {len(df_new)} dòng.")
 
 if __name__ == "__main__":
-    data = run_crawler(pages=100)
+    data = run_crawler(pages=10)
     save_data(data)

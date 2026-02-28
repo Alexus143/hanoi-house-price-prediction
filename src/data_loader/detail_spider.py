@@ -90,7 +90,7 @@ def run_detail_spider(table_name="bds_hadong", limit=50):
             print(f"\n[DetailSpider] Đang cào ({idx}/{len(listings_to_scrape)}): {url}")
             
             try:
-                # 🌟 Đặt tối hậu thư: Quá 30 giây tải trang là cắt!
+                # Quá 30 giây tải trang là cắt!
                 driver.set_page_load_timeout(30)
                 driver.get(url)
                 
@@ -117,7 +117,7 @@ def run_detail_spider(table_name="bds_hadong", limit=50):
                 
                 print(f"[DetailSpider] ❌ Lỗi khi xử lý: {e}")
                 
-                # 🌟 KỸ THUẬT HỒI SINH TRÌNH DUYỆT TẠI ĐÂY 🌟
+                # KỸ THUẬT HỒI SINH TRÌNH DUYỆT TẠI ĐÂY
                 error_msg = str(e).lower()
                 if "target window already closed" in error_msg or "web view not found" in error_msg or "disconnected" in error_msg:
                     print("⚠️ Trình duyệt vừa bị Crash do trang quá nặng. Đang khởi động lại Browser...")
@@ -141,4 +141,4 @@ def run_detail_spider(table_name="bds_hadong", limit=50):
 
 if __name__ == "__main__":
     # Test chạy thử 5 bài
-    run_detail_spider(table_name="bds_hadong", limit=5)
+    run_detail_spider(table_name="bds_hadong", limit=50)

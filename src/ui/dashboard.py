@@ -6,7 +6,7 @@ import numpy as np
 
 def render_dashboard(df):
     """Hàm hiển thị Tab Thống kê với biểu đồ tương tác Plotly"""
-    st.subheader("📈 Phân tích Thị trường Bất Động Sản")
+    st.subheader("Phân tích Thị trường Bất Động Sản")
     
     # 1. TẠO BỘ LỌC (FILTERS)
     col_filter1, col_filter2, col_filter3 = st.columns(3)
@@ -14,7 +14,7 @@ def render_dashboard(df):
     with col_filter1:
         location_counts = df['ward'].value_counts()
         options_ward = ["Tất cả"] + location_counts.index.tolist()
-        chon_phuong = st.selectbox("📍 Chọn Phường/Xã:", options_ward, index=0, key="dash_phuong")
+        chon_phuong = st.selectbox("Chọn Phường/Xã:", options_ward, index=0, key="dash_phuong")
 
     with col_filter2:
         if 'property_type' in df.columns:
@@ -22,7 +22,7 @@ def render_dashboard(df):
             options_type = ["Tất cả"] + type_counts.index.tolist()
         else:
             options_type = ["Tất cả"]
-        chon_loai = st.selectbox("🏢 Loại hình:", options_type, index=0, key="dash_loai")
+        chon_loai = st.selectbox("Loại hình:", options_type, index=0, key="dash_loai")
 
     # Xử lý lọc cấp 1 (Theo Phường và Loại hình)
     df_display = df.copy()
@@ -41,7 +41,7 @@ def render_dashboard(df):
         if max_price_db <= 0: max_price_db = 1.0 
         
         default_max = float(df_display['price_billion'].quantile(0.95))
-        price_range = st.slider("💰 Khoảng giá (Tỷ VNĐ):", 0.0, max_price_db, (0.0, default_max), step=0.5, key="dash_price")
+        price_range = st.slider("Khoảng giá (Tỷ VNĐ):", 0.0, max_price_db, (0.0, default_max), step=0.5, key="dash_price")
 
     # Xử lý lọc cấp 2 (Theo Khoảng giá)
     df_final = df_display[
@@ -72,6 +72,7 @@ def render_dashboard(df):
                 
                 # Tính toán cột đơn giá (Triệu VNĐ / m2)
                 # Sử dụng np.where để tránh lỗi ZeroDivisionError nếu area = 0
+                import numpy as np
                 df_final['price_per_m2'] = np.where(
                     df_final['area'] > 0, 
                     (df_final['price_billion'] * 1000) / df_final['area'], 
@@ -85,24 +86,42 @@ def render_dashboard(df):
                 df_time = df_final.dropna(subset=['scraped_date_clean', 'price_per_m2'])
                 
                 if not df_time.empty:
-                    # Nhóm dữ liệu theo ngày và tính trung bình đơn giá
-                    df_trend = df_time.groupby(df_time['scraped_date_clean'].dt.date)['price_per_m2'].mean().reset_index()
-                    df_trend = df_trend.rename(columns={'scraped_date_clean': 'Ngày', 'price_per_m2': 'Đơn giá TB (Triệu/m²)'})
+                    # Nhóm dữ liệu theo ngày và tính trung bình, thấp nhất, cao nhất
+                    df_trend = df_time.groupby(df_time['scraped_date_clean'].dt.date)['price_per_m2'].agg(
+                        ['mean', 'min', 'max']
+                    ).reset_index()
+                    
+                    # Đổi tên cột để hiển thị đẹp trên Legend của Plotly
+                    df_trend = df_trend.rename(columns={
+                        'scraped_date_clean': 'Ngày', 
+                        'mean': 'Trung bình',
+                        'min': 'Thấp nhất',
+                        'max': 'Cao nhất'
+                    })
                     df_trend = df_trend.sort_values('Ngày')
 
+                    # Vẽ 3 line graph trên cùng 1 biểu đồ
                     fig_trend = px.line(
                         df_trend, 
                         x="Ngày", 
-                        y="Đơn giá TB (Triệu/m²)", 
-                        title=f"Biến động đơn giá trung bình theo thời gian tại {chon_phuong}",
+                        y=["Trung bình", "Thấp nhất", "Cao nhất"], 
+                        title=f"Biến động đơn giá theo thời gian tại {chon_phuong}",
                         markers=True,
-                        color_discrete_sequence=['#E74C3C']
+                        color_discrete_sequence=['#E74C3C', '#2ECC71', '#3498DB'] # Đỏ (TB), Xanh lá (Thấp nhất), Xanh dương (Cao nhất)
                     )
+                    
+                    # Tùy chỉnh Layout hiển thị tooltip và y-axis
+                    fig_trend.update_layout(
+                        yaxis_title="Đơn giá (Triệu/m²)",
+                        legend_title_text="Chỉ số",
+                        hovermode="x unified"
+                    )
+                    
                     st.plotly_chart(fig_trend, width='stretch')
                 else:
                     st.info("Không có dữ liệu hợp lệ để vẽ biểu đồ biến động đơn giá.")
             else:
-                st.warning("Dữ liệu thiếu cột 'price_billion' hoặc 'area' để tính đơn giá.")
+                st.warning("Dữ liệu thiếu các cột cần thiết ('scraped_date', 'price_billion', 'area') để tính đơn giá.")
             
         with chart_col2:
             # Biểu đồ Scatter: Tương quan Diện tích - Giá tiền
@@ -177,4 +196,4 @@ def render_dashboard(df):
                     )
                     st.plotly_chart(fig_bar, width='stretch')
     else:
-        st.info("💡 Không tìm thấy tin bất động sản nào phù hợp với bộ lọc hiện tại.")
+        st.info("Không tìm thấy tin bất động sản nào phù hợp với bộ lọc hiện tại.")
