@@ -6,11 +6,11 @@ from src.ai_engine.predictor import PricePredictor
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.config.path import MODEL_PATH
+from src.config.path import MODEL_PATH, XGB_MODEL_PATH
 
 @st.cache_resource
 def get_predictor():
-    return PricePredictor(MODEL_PATH)
+    return PricePredictor(XGB_MODEL_PATH)
 
 def render_prediction(df):
     predictor = get_predictor()
@@ -20,7 +20,7 @@ def render_prediction(df):
         return
 
     st.write("Nhập thông số căn nhà bạn muốn mua/bán, AI sẽ gợi ý mức giá hợp lý.")
-    st.caption(f"Hệ thống đang sử dụng mô hình Random Forest (Sai số chuẩn MAE: **{predictor.mae:.2f} Tỷ VNĐ**)")
+    st.caption(f"Hệ thống đang sử dụng mô hình XGBoost (Sai số chuẩn MAE: **{predictor.mae:.2f} Tỷ VNĐ**)")
     
     # --- Trích xuất danh mục động từ Database để nạp vào SelectBox ---
     valid_wards = sorted(df['ward'].dropna().unique().tolist())
