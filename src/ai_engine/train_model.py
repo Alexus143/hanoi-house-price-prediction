@@ -6,12 +6,12 @@ import sys
 import joblib
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error, r2_score
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.config.path import MODEL_PATH
 from src.database.postgres_manager import PostgresManager
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.stdout.reconfigure(encoding='utf-8')
 
 def load_data_from_db():
@@ -86,8 +86,10 @@ def train_and_evaluate(X, y):
     y_pred_unit = challenger_model.predict(X_test)
     y_pred_total = y_pred_unit * X_test['area']
     challenger_mae = mean_absolute_error(y_test['price_billion'], y_pred_total)
+    challenger_r2 = r2_score(y_test['price_billion'], y_pred_total)
     
     print(f"📊 MAE của Challenger Model (Trên Tổng giá): {challenger_mae:.4f} Tỷ VNĐ")
+    print(f"📊 R² của Challenger Model (Trên Tổng giá): {challenger_r2:.4f}")
     
     return challenger_model, challenger_mae, X.columns
 

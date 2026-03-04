@@ -13,6 +13,7 @@ CLEANED_DATA_PATH = os.path.join(DATA_DIR, 'cleaned_data.csv')
 
 # Đã cập nhật lại MODEL_PATH theo cấu trúc chuẩn lưu ở thư mục models/
 MODEL_PATH = os.path.join(ROOT_DIR, 'models', 'house_price_model.pkl')
+XGB_MODEL_PATH = os.path.join(ROOT_DIR, 'models', 'xgb_house_price_model.pkl')
 
 # Đảm bảo thư mục lưu trữ luôn tồn tại
 os.makedirs(DATA_DIR, exist_ok=True)

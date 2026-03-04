@@ -5,9 +5,7 @@ __pycache__/
 
 # Chặn file cấu hình hệ thống
 .DS_Store
-
-# QUAN TRỌNG: Chặn lộ API KEY và Secrets
-.streamlit/secrets.toml
+.streamlit/
 
 # (Tùy chọn) Chặn dữ liệu nếu file quá nặng > 100MB
 # data/*.csv
@@ -16,5 +14,8 @@ __pycache__/
 # Environments
 .env
 .env.*
+
+.note/
+note/
 
 venv_bds/

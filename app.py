@@ -2,7 +2,9 @@
 import streamlit as st
 import os
 from streamlit_float import *
+import streamlit as st 
 from dotenv import load_dotenv
+from src.config.get_config import get_config
 
 # Load environment variables from .env file
 load_dotenv()
@@ -55,7 +57,7 @@ with tab2:
     render_prediction(df)
 
 # CHATBOT (MODULE GIAO DIỆN NỔI)
-API_KEY = os.getenv("GEMINI_API_KEY")
+API_KEY = get_config("GEMINI_API_KEY")
 
 if API_KEY:
     try:

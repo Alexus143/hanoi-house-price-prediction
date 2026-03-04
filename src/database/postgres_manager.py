@@ -16,7 +16,7 @@ class PostgresManager:
         """Khởi tạo kết nối tới PostgreSQL sử dụng SQLAlchemy Engine"""
         try:
             self.engine = create_engine(POSTGRES_URI)
-            # THÊM ĐOẠN NÀY: Ép SQLAlchemy ping thử vào DB ngay lập tức
+            #Ép SQLAlchemy ping thử vào DB ngay lập tức
             with self.engine.connect() as conn:
                 pass
             print("✅ Đã kết nối thành công tới PostgreSQL.")
