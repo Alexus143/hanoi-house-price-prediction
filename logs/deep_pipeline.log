@@ -944,3 +944,124 @@ remote: This repository moved. Please use the new location:
 remote:   https://github.com/HieuNT316/hanoi-house-price-prediction.git        
 To https://github.com/Alexus143/hanoi-house-price-prediction.git
    71e9d27..c64f6ef  main -> main
+========================================= 
+[Thu 03/05/2026 22:00:02.05] [1/3] Dang cao chi tiet BĐS... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+
+[DetailSpider] Khởi động luồng làm giàu dữ liệu (Limit: 50 bài/lượt)...
+✅ Đã kết nối thành công tới PostgreSQL.
+[Browser] Đang khởi tạo trình duyệt...
+[Browser] Phát hiện Chrome (Windows): Version 139
+
+[DetailSpider] Đang cào (1/14): https://batdongsan.com.vn/ban-nha-rieng-phuong-van-phuc-1/ban-gap-3-tang-sat-louis-city-o-to-7-cho-vao-dan-xay-chac-chan-chi-10-5-ty-pr45206650
+  -> Lấy được 1/6 feature chi tiết.
+
+[DetailSpider] Đang cào (2/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-le-trong-tan-phuong-duong-noi-khu-do-thi-geleximco-le-trong-tan/chinh-chu-ban-c34-6-trung-tam-c-dt240m-day-ong-vui-hang-xom-vip-gia-44-ty-pr45232432
+  -> Lấy được 0/6 feature chi tiết.
+
+[DetailSpider] Đang cào (3/14): https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-tran-phu-phuong-van-quan-grand-sunlake/ban-92m-view-ban-giao-quy-1-2025-pr44235668
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (4/14): https://batdongsan.com.vn/ban-nha-rieng-phuong-van-quan/hang-au-tu-ban-46m-6-tang-thang-may-vi-tri-cuc-thoang-o-to-tranh-gia-13-9-ty-pr45228848
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (5/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-to-hieu-phuong-ha-cau-hyundai-hillstate/ban-villas-ong-lo-goc-song-ang-cap-kd-tot-98m2-x-4-tang-mt8-5m-gia-chi-28-ty-pr45236833
+  -> Lấy được 4/6 feature chi tiết.
+
+[DetailSpider] Đang cào (6/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-van-phu-phuong-phu-la-khu-do-thi-moi-van-phu/chinh-chu-ban-k-t-68m2-mt-4-5m-5-tang-xay-full-noi-that-18-5-ty-pr45236042
+  -> Lấy được 5/6 feature chi tiết.
+
+[DetailSpider] Đang cào (7/14): https://batdongsan.com.vn/ban-nha-mat-pho-duong-bach-thai-buoi-phuong-van-quan-15/hiem-phan-lo-hoc-vien-ma-chien-thang-gara-oto-kinh-doanh-khung-hai-thoang-pr31303750
+  -> Lấy được 5/6 feature chi tiết.
+
+[DetailSpider] Đang cào (8/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-le-trong-tan-phuong-duong-noi-khu-do-thi-geleximco-le-trong-tan/ban-gap-tai-21-4-ty-114m2-4pn-6wc-pr45229972
+  -> Lấy được 6/6 feature chi tiết.
+
+[DetailSpider] Đang cào (9/14): https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-tran-phu-phuong-van-quan-grand-sunlake/tien-ban-gap-lau-dai-tang-cao-thoang-mat-114-3m2-thiet-ke-3pn-goc-view-thanh-pho-pr45232188
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (10/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-phuong-kien-hung-khu-do-thi-thanh-ha-muong-thanh/ban-uong-25m-gan-ho-oi-dien-chung-cu-vi-tri-kinh-doanh-pr45230156
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (11/14): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-le-trong-tan-phuong-duong-noi-khu-do-thi-geleximco-le-trong-tan/top-cac-can-gia-hop-ly-nhat-thoi-iem-hien-tai-pr45229729
+  -> Lấy được 6/6 feature chi tiết.
+
+[DetailSpider] Đang cào (12/14): https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-duong-noi/ban-gap-3pn-2wc-117m2-tai-ct8d-park-view-residence-noi-pr45228132
+  -> Lấy được 2/6 feature chi tiết.
+
+[DetailSpider] Đang cào (13/14): https://batdongsan.com.vn/ban-nha-rieng-duong-ha-tri-phuong-kien-hung-15/ban-tai-to-8-a-sy-150-trieu-35-m2-4pn-3wc-phap-ly-ay-u-chinh-chu-pr45236331
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (14/14): https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-huu-phuong-mo-lao-thap-doi-kepler-land/ban-2-goc-c04-va-c05-toa-hh02-gia-9ty500tr-pr44284223
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Hoàn thành. Cập nhật thành công 14/14 bài đăng.
+[Thu 03/05/2026 22:03:28.39] [2/3] Dang huan luyen AI tren du lieu moi... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+[CV] END colsample_bytree=1.0, learning_rate=0.01, max_depth=12, n_estimators=300, subsample=0.7; total time=   7.7s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=1000, subsample=0.7; total time=  11.1s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=1.0; total time=   3.7s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=300, subsample=0.7; total time=   5.1s
+[CV] END colsample_bytree=0.8, learning_rate=0.1, max_depth=6, n_estimators=500, subsample=0.8; total time=   5.4s
+[CV] END colsample_bytree=0.8, learning_rate=0.05, max_depth=6, n_estimators=1000, subsample=0.8; total time=  10.1s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=8, n_estimators=1000, subsample=0.7; total time=   9.4s
+[CV] END colsample_bytree=1.0, learning_rate=0.01, max_depth=12, n_estimators=300, subsample=0.7; total time=   6.4s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=0.7; total time=  11.2s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=1.0; total time=   3.5s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=12, n_estimators=300, subsample=0.8; total time=   4.8s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=6, n_estimators=300, subsample=1.0; total time=   3.5s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.7; total time=  10.7s
+[CV] END colsample_bytree=0.8, learning_rate=0.05, max_depth=6, n_estimators=1000, subsample=0.8; total time=   8.1s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.7; total time=   4.7s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=1.0; total time=  10.7s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=1000, subsample=0.7; total time=  11.3s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=300, subsample=0.7; total time=   4.4s
+[CV] END colsample_bytree=0.8, learning_rate=0.1, max_depth=6, n_estimators=500, subsample=0.8; total time=   4.6s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.7; total time=   9.4s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.8; total time=   8.3s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.7; total time=   4.4s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=500, subsample=1.0; total time=   5.3s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=0.7; total time=  12.4s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=1.0; total time=   3.6s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=300, subsample=0.7; total time=   4.7s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=6, n_estimators=300, subsample=1.0; total time=   3.1s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.7; total time=  11.0s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.8; total time=   7.9s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.8; total time=   5.2s
+[CV] END colsample_bytree=1.0, learning_rate=0.01, max_depth=12, n_estimators=300, subsample=0.7; total time=   6.8s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=1000, subsample=0.7; total time=  12.2s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=12, n_estimators=300, subsample=0.8; total time=   4.4s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   4.5s
+[CV] END colsample_bytree=0.8, learning_rate=0.1, max_depth=6, n_estimators=500, subsample=0.8; total time=   5.7s
+[CV] END colsample_bytree=0.8, learning_rate=0.05, max_depth=6, n_estimators=1000, subsample=0.8; total time=  10.0s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.8; total time=   2.9s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.8; total time=   3.1s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=300, subsample=0.7; total time=   4.3s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=500, subsample=1.0; total time=   5.1s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=0.7; total time=  10.3s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=500, subsample=0.8; total time=   8.2s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   4.5s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=12, n_estimators=1000, subsample=1.0; total time=  13.3s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=6, n_estimators=1000, subsample=0.8; total time=   8.8s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   5.4s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=1.0; total time=  10.9s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=500, subsample=0.8; total time=   9.2s
+[CV] END colsample_bytree=1.0, learning_rate=0.1, max_depth=12, n_estimators=300, subsample=0.8; total time=   5.0s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=6, n_estimators=300, subsample=1.0; total time=   3.6s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=12, n_estimators=1000, subsample=1.0; total time=  13.3s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=8, n_estimators=1000, subsample=0.7; total time=   9.7s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   4.2s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=8, n_estimators=500, subsample=1.0; total time=   5.0s
+[CV] END colsample_bytree=0.8, learning_rate=0.01, max_depth=12, n_estimators=500, subsample=1.0; total time=  10.6s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=12, n_estimators=500, subsample=0.8; total time=   7.8s
+[CV] END colsample_bytree=0.7, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   4.7s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=12, n_estimators=1000, subsample=1.0; total time=  13.9s
+[CV] END colsample_bytree=0.7, learning_rate=0.1, max_depth=8, n_estimators=1000, subsample=0.7; total time=  10.0s
+[CV] END colsample_bytree=1.0, learning_rate=0.05, max_depth=6, n_estimators=500, subsample=1.0; total time=   4.5s
+✅ Đã kết nối thành công tới PostgreSQL.
+Fitting 3 folds for each of 20 candidates, totalling 60 fits
+✅ Tham số tối ưu: {'subsample': 0.7, 'n_estimators': 500, 'max_depth': 12, 'learning_rate': 0.01, 'colsample_bytree': 0.8}
+MAE của mô hình XGBoost: 1.7552
+R² của mô hình XGBoost: 0.9300
+🥊 Đang so sánh... Champion MAE: 1.6471 vs Challenger MAE: 1.7552
+🛡️ Champion bảo vệ ngôi vương. Giữ nguyên mô hình cũ.
