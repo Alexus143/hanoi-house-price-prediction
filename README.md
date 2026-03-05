@@ -1,165 +1,122 @@
 # 🏡 Hệ Thống Phân Tích & Định Giá Bất Động Sản Hà Đông
 
-Dự án là một hệ thống dữ liệu end-to-end (ETL Pipeline & Machine Learning) tự động cào dữ liệu, làm sạch, lưu trữ và huấn luyện mô hình AI để định giá bất động sản tại quận Hà Đông theo thời gian thực. Hệ thống sử dụng kiến trúc 2 luồng Pipeline bất đồng bộ để tối ưu tài nguyên và vượt qua các cơ chế Anti-bot, với PostgreSQL làm cơ sở dữ liệu trung tâm.
+Dự án là một hệ thống dữ liệu end-to-end (ETL Pipeline & Machine Learning) tự động thu thập dữ liệu, làm sạch, lưu trữ và dự báo giá bất động sản tại quận Hà Đông theo thời gian thực. Hệ thống xử lý tập dữ liệu đầu vào với quy mô hàng ngàn mẫu bất động sản (khoảng 5100+ mẫu) cùng 12 đặc trưng, nhằm dự đoán giá trị thực tế (tính bằng tỷ VNĐ).
+
+Hệ thống hiện được **triển khai trực tuyến (Cloud Native)** với Database vận hành trên nền tảng Supabase, giao diện phục vụ người dùng qua Streamlit Cloud, và lõi AI được nâng cấp mạnh mẽ sử dụng thuật toán **XGBoost**.
+
+* **🌍 Truy cập ứng dụng tại:** [Hà Đông House Price Analytics](https://hanoi-house-price-prediction-cqga57xqgo22wq72uvsdcc.streamlit.app/)
+* **💾 Cơ sở dữ liệu:** PostgreSQL (Lưu trữ trên **Supabase**)
 
 ## 🏗️ Kiến trúc Hệ thống & Luồng Dữ liệu
 
-Hệ thống được phân tách thành các module độc lập, hoạt động theo 2 luồng chính:
+Dự án được thiết kế theo module hóa, tách biệt giữa các công đoạn xử lý dữ liệu (ETL) và luồng huấn luyện mô hình, hoạt động đồng bộ giữa Local (Automation) và Cloud (Supabase & Streamlit).
 
-### A. Luồng 1: Fast Ingestion Pipeline (Quét bề mặt - 1 lần/ngày)
-* **`spider.py`**: Bóc tách dữ liệu cơ bản (Giá, Diện tích, Phường, URL) từ trang danh sách. Gộp dữ liệu mới vào `raw_data.csv` bằng `pd.concat` để chống Schema Drift. File `raw_data.csv` được giữ nguyên trong mọi tình huống.
-* **`cleaner.py`**: 
-  * Áp dụng NLP và Regex để trích xuất số phòng từ văn bản.
-  * Lọc Outlier (giá, diện tích, đơn giá) và điền khuyết bằng `KNNImputer`.
-  * Băm ID (`listing_id`) bằng MD5 dựa trên các đặc trưng vật lý (bỏ title và published_date) để chống tin đăng lại.
-  * Khởi tạo Schema bảng `bds_hadong` trong PostgreSQL (17 cột, gán giá trị NULL cho 6 cột feature nâng cao).
-  * Upsert dữ liệu vào Database. Gán `is_enriched = True` cho các dữ liệu cũ thiếu URL để bảo vệ luồng 2.
+### A. Luồng 1: Fast Ingestion Pipeline (Quét bề mặt - Chạy hàng ngày)
 
-### B. Luồng 2: Deep Enrich & Train Pipeline (Cào chi tiết & Học máy - Chạy ban đêm)
-* **`detail_spider.py`**: 
-  * Truy vấn PostgreSQL lấy các bản ghi có `is_enriched = False`.
-  * Truy cập từng URL để cào 6 feature nâng cao: Mặt tiền, Đường vào, Số tầng, Hướng, Pháp lý, Nội thất.
-  * Áp dụng kỹ thuật Respawn (tự động khởi tạo lại trình duyệt khi bị crash do Cloudflare/Headless) và Eager Loading + Timeout 30s (bỏ qua tải ảnh/iframe) để chống kẹt code.
-  * Cập nhật dữ liệu trực tiếp vào PostgreSQL.
-* **`train_model.py`**: 
-  * Kéo toàn bộ dữ liệu từ PostgreSQL. Xử lý Missing Data bằng Median.
-  * Áp dụng One-hot Encoding (sử dụng `drop_first=True` chống bẫy biến giả).
-  * Huấn luyện bằng `RandomForestRegressor` kết hợp `GridSearchCV`.
-  * **Cơ chế Champion-Challenger**: Chỉ lưu đè `house_price_model.pkl` nếu MAE (Sai số tuyệt đối trung bình) của mô hình mới thấp hơn mô hình hiện tại.
+* **`spider.py`**: Sử dụng Selenium để trích xuất nhanh thông tin cơ bản (Giá, Diện tích, Phường, URL) từ trang danh sách bất động sản. Dữ liệu thô liên tục được append vào `raw_data.csv` bằng `pd.concat` để đề phòng Schema Drift.
+* **`cleaner.py`**:
+* Áp dụng NLP và Regex để trích xuất tự động số phòng từ văn bản rác.
+* Lọc Outlier (giá, diện tích) và điền khuyết bằng `KNNImputer`.
+* **Định danh dữ liệu (Deduplication):** Băm ID (`listing_id`) bằng thuật toán MD5 dựa trên các đặc trưng vật lý để chống tình trạng tin rác, tin đăng lại.
+* **Upsert vào Supabase:** Mở kết nối trực tiếp đến PostgreSQL trên Cloud để ghi dữ liệu, chuẩn bị cho luồng cào sâu.
 
-### C. Giao diện (Streamlit UI) & Dự đoán (`predictor.py`)
-* Ứng dụng cung cấp giao diện nhập thông số.
-* Sử dụng decorator `@st.cache_data(ttl=3600)` để lưu bộ nhớ đệm kết quả Query từ PostgreSQL trong 1 giờ.
-* Mô hình ánh xạ chính xác các đặc trưng One-hot Encoding theo đúng cấu trúc lúc huấn luyện để suy luận giá.
+
+
+### B. Luồng 2: Deep Enrich & AI Pipeline (Cào chi tiết & Học máy)
+
+* **`detail_spider.py`**:
+* Truy vấn Supabase lấy các bản ghi chưa hoàn thiện (`is_enriched = False`).
+* Cào sâu vào từng URL để lấy 6 feature nâng cao: Mặt tiền, Đường vào, Số tầng, Hướng, Pháp lý, Nội thất.
+
+
+* **`train_xgb.py` (Lõi AI nâng cấp)**:
+* **Thuật toán XGBoost:** Chuyển đổi từ RandomForest sang `XGBoost` để nắm bắt tốt hơn các mối quan hệ phi tuyến phức tạp trong giá nhà, giảm thiểu overfitting.
+* **Xử lý Target Variable:** Áp dụng phép biến đổi Logarit (`np.log1p`) lên biến mục tiêu (Giá - tỷ VNĐ) nhằm chuẩn hóa phân phối dữ liệu (giảm độ lệch Skewness), giúp mô hình dự đoán mượt mà hơn ở các phân khúc giá cao.
+* **Tối ưu tự động (AutoML):** Tích hợp **Optuna** thay thế cho GridSearchCV, giúp tìm kiếm siêu tham số (Hyperparameters) tối ưu nhất trong không gian rộng với thời gian hội tụ nhanh hơn.
+* **Cơ chế Champion-Challenger**: Hệ thống tự động so sánh MAE (Sai số tuyệt đối trung bình) của mô hình XGBoost mới với mô hình đang chạy. Chỉ đè file `xgb_house_price_model.pkl` lên Cloud khi mô hình mới thực sự thông minh hơn.
+
+
+
+### C. Giao diện (Streamlit Cloud) & Dự đoán
+
+* Ứng dụng cung cấp giao diện trực quan nhập các thông số vật lý của ngôi nhà.
+* Lớp suy luận gọi mô hình XGBoost, tự động áp dụng hàm mũ (`np.expm1`) để chuyển đổi kết quả ngược lại từ dạng logarit về dạng tỷ VNĐ để hiển thị cho người dùng.
+* Tích hợp chatbot tư vấn dùng Gemini API giải đáp các xu hướng bất động sản tại khu vực.
 
 ## 🛠️ Tech Stack
 
 * **Ngôn ngữ:** Python 3.10+
-* **Cơ sở dữ liệu:** PostgreSQL (`PostgresManager` & `psycopg2`)
-* **Thu thập dữ liệu:** Selenium (Undetected Chromedriver)
-* **Xử lý dữ liệu:** Pandas (Ưu tiên Re-assignment, không dùng `inplace=True`), Numpy, Regex, Hashlib
-* **Machine Learning:** Scikit-Learn (`RandomForestRegressor`, `GridSearchCV`)
-* **Giao diện Web:** Streamlit, Streamlit-Float
-* **Tích hợp AI:** Gemini API (Chatbot tư vấn)
-* **Testing & CI/CD:** Pytest, Git LFS, Windows Task Scheduler
+* **Cơ sở dữ liệu (Online):** **Supabase (PostgreSQL)**
+* **Triển khai (Deployment):** **Streamlit Cloud**
+* **Thu thập & Xử lý Dữ liệu:** Selenium (Undetected Chromedriver), Pandas, Numpy, Regex, Hashlib.
+* **Machine Learning:** **XGBoost**, Scikit-Learn, **Optuna** (Tối ưu Hyperparameter).
+* **Tích hợp AI:** Gemini API.
 
-## 📂 Cấu trúc Thư mục
+## 📂 Cấu trúc Thư mục Nổi bật
 
 ```text
-├── .env                              # File biến môi trường (chứa GEMINI_API_KEY)
-├── app.py                            # Khởi chạy giao diện Streamlit UI & cấu hình Cache
+├── .env                              # Secret variables (DB_URL, GEMINI_API_KEY)
+├── app.py                            # Streamlit App Entry Point
 ├── src/
-│   ├── config/
-│   │   ├── crawler.py                
-│   │   ├── database.py               
-│   │   └── path.py                   
-│   ├── data_loader/
-│   │   ├── browser.py                
-│   │   ├── spider.py                 
-│   │   └── detail_spider.py          
+│   ├── data_loader/                  # Chứa spider.py và detail_spider.py
 │   ├── database/
-│   │   └── postgres_manager.py       
+│   │   └── postgres_manager.py       # Trình quản lý kết nối Supabase
 │   ├── preprocessing/
-│   │   └── cleaner.py                
-│   ├── ai_engine/
-│   │   ├── train_model.py            
-│   │   ├── predictor.py              
-│   │   └── chatbot.py                
-│   └── ui/
-│       ├── dashboard.py              
-│       └── prediction.py             
-├── tests/                            
-├── data/                             
-├── models/                           
-├── logs/                             
-├── automation/                       
-├── requirements.txt
+│   │   └── cleaner.py                # Pipeline làm sạch và nội suy dữ liệu
+│   └── ai_engine/
+│       ├── train_xgb.py              # Script huấn luyện XGBoost + Optuna
+│       ├── predictor.py              # Xử lý suy luận giá (áp dụng np.expm1)
+│       └── chatbot.py                # Tích hợp LLM
+├── models/
+│   └── xgb_house_price_model.pkl     # File mô hình XGBoost (Theo dõi qua Git LFS)
+├── automation/                       # Scripts chạy tự động trên Local Server
 └── README.md
 
 ```
 
-## 🧠 Quy tắc Nghiệp vụ Bắt buộc (ETL & NLP)
+## ⚖️ Trade-offs & Quyết định Kỹ thuật
 
-* **Xử lý ngoại lệ "Đất nền":** Hệ thống tự động phân loại bất động sản. Nếu `property_type` là "Đất nền", thuật toán ép buộc gán số lượng phòng ngủ/phòng tắm bằng `0` để tránh gây nhiễu cho mô hình.
-* **Trích xuất bằng ngôn ngữ tự nhiên:** Tự động đọc hiểu "ngôn ngữ môi giới" (vd: "3pn", "2wc") từ tiêu đề và mô tả trong trường hợp dữ liệu crawl bị thiếu hụt.
-
-## ⚖️ Trade-offs & Limitations
-
-Trong quá trình thiết kế hệ thống, các quyết định sau được thực thi dựa trên sự đánh đổi giữa tài nguyên, thời gian và ràng buộc hạ tầng:
-
-### 1. Kiến trúc Thu thập Dữ liệu
-
-* **Trade-off:** Sử dụng Selenium (Undetected Chromedriver) thay vì HTTP Requests (Scrapy/BeautifulSoup). Việc này đánh đổi tốc độ thực thi và tài nguyên phần cứng (RAM/CPU cao) lấy khả năng vượt qua cơ chế Cloudflare Anti-bot.
-* **Limitation:** Độ ổn định phụ thuộc hoàn toàn vào cấu trúc DOM của trang web. Nếu nền tảng thay đổi giao diện, quá trình bóc tách sẽ thất bại. Mạng yếu có thể gây gián đoạn luồng cào dữ liệu chi tiết.
-
-### 2. Định danh Dữ liệu (Deduplication)
-
-* **Trade-off:** Sử dụng MD5 Hash dựa trên đặc trưng vật lý (diện tích, giá, phân khúc) để tạo `listing_id` cho cơ chế Upsert. Tiêu đề và ngày đăng bị loại bỏ khỏi hàm băm nhằm ngăn chặn hành vi đăng lại bài cùng một bất động sản từ các môi giới khác nhau.
-* **Limitation:** Nếu thông số bị chỉnh sửa nhẹ (ví dụ diện tích từ 50m² thành 50.5m²) kèm thay đổi giá, hệ thống sẽ xác định đây là bản ghi mới, dẫn đến rò rỉ dữ liệu trùng lặp (Duplicate Data Leakage) trong PostgreSQL.
-
-### 3. Mô hình Học máy
-
-* **Trade-off:** Lựa chọn `RandomForestRegressor` thay vì các thuật toán Boosting (XGBoost) hoặc Deep Learning. Quyết định này giữ cho mô hình nhẹ, dễ huấn luyện tại máy cục bộ và tính toán Feature Importance rõ ràng, nhưng hy sinh độ chính xác khi nội suy các mối quan hệ phi tuyến phức tạp.
-* **Limitation:** Thiếu dữ liệu tọa độ địa lý (Latitude/Longitude). Mô hình phân loại ranh giới thông qua "Phường" (Categorical variables), không đo lường được các yếu tố vị trí vi mô như khoảng cách ra trục đường chính, ngõ cụt hay tiện ích xung quanh.
-
-### 4. Tiền xử lý & NLP
-
-* **Trade-off:** Xử lý văn bản tự do bằng Regex thay vì các mô hình LLM. Giải pháp này tiết kiệm tài nguyên tính toán và chi phí API, thực thi nhanh trên CPU.
-* **Limitation:** Bị giới hạn bởi các patterns định nghĩa trước. Nếu mô tả chứa lỗi chính tả, từ lóng hoặc sai quy chuẩn, Regex sẽ bỏ sót đặc trưng, dẫn đến việc phải dùng `KNNImputer` để nội suy, làm giảm phương sai tự nhiên của bộ dữ liệu.
-
-### 5. Tự động hóa & CI/CD
-
-* **Trade-off:** Quản lý lịch trình qua Windows Task Scheduler bằng VBScript tại Local thay vì sử dụng Apache Airflow trên Cloud. Giúp tiết kiệm chi phí hạ tầng và đơn giản hóa quá trình vận hành ban đầu.
-* **Limitation:** Thiếu hệ thống giám sát và cảnh báo tự động (Alerting). Không hỗ trợ scale ngang nếu khối lượng dữ liệu phình to.
+1. **Kiến trúc Hybrid (Local ETL - Cloud DB):** Do sử dụng Selenium đòi hỏi tài nguyên máy tính cụ thể và IP để vượt Cloudflare, công đoạn cào dữ liệu được thực hiện tại Local. Tuy nhiên, việc đẩy ngay dữ liệu sạch lên Supabase (Cloud) đảm bảo Web App luôn có dữ liệu realtime để query mà không bị gián đoạn.
+2. **XGBoost + Target Log-Transformation (`np.log1p`):** Sự phân hóa giá bất động sản ở Hà Đông rất lớn (từ ngõ hẻm vài tỷ đến mặt phố hàng chục tỷ). Việc biến đổi logarit giúp mô hình XGBoost không bị thiên lệch bởi các căn nhà siêu đắt (Outliers tác động lên hàm mất mát), trả về dự báo có độ ổn định và phương sai tốt hơn.
+3. **Thay thế GridSearchCV bằng Optuna:** Việc có 12 đặc trưng và mô hình Boosting phức tạp khiến GridSearch quá chậm. Optuna sử dụng phương pháp tìm kiếm dạng xác suất (Bayesian optimization) giúp giảm 70% thời gian tuning nhưng vẫn tìm ra bộ tham số xuất sắc.
 
 ## 🚀 Hướng Dẫn Cài Đặt & Vận Hành
 
-### Bước 1: Khởi tạo Môi trường
+### Bước 1: Khởi tạo
 
 ```bash
-git clone [https://github.com/Alexus143/hanoi-house-price-prediction.git](https://github.com/Alexus143/hanoi-house-price-prediction.git)
+git clone https://github.com/HieuNT316/hanoi-house-price-prediction.git
 cd hanoi-house-price-prediction
 pip install -r requirements.txt
 
 ```
 
-### Bước 2: Cấu hình Cơ sở dữ liệu & API Key
+### Bước 2: Cấu hình Secret (Supabase & Gemini)
 
-1. **Database:** Cập nhật thông số kết nối PostgreSQL tại `src/config/database.py`.
-2. **Gemini API:** Tạo file `.env` tại thư mục gốc của dự án:
+Tạo file `.env` (chạy local) hoặc cấu hình trong **Streamlit Cloud > Advanced Settings > Secrets**:
 
-```env
-# .env
-GEMINI_API_KEY="your-google-gemini-api-key"
-
-```
-
-### Bước 3: Kiểm thử & Quản lý file lớn
-
-* Chạy test:
-
-```bash
-pytest tests/
+```toml
+DB_HOST = "your-supabase-db-host"
+DB_NAME = "postgres"
+DB_USER = "postgres"
+DB_PASS = "your-password"
+DB_PORT = "5432"
+GEMINI_API_KEY = "your-gemini-api-key"
 
 ```
 
-* Đảm bảo Git LFS đã được thiết lập để theo dõi file `models/house_price_model.pkl`.
+### Bước 3: Vận hành Pipeline & Streamlit
 
-### Bước 4: Chạy Streamlit UI
+* Chạy app trên trình duyệt:
 
 ```bash
 streamlit run app.py
 
 ```
 
-### Bước 5: Triển khai Tự Động Hóa (Windows Task Scheduler)
+* Huấn luyện lại mô hình (Yêu cầu phải có dữ liệu trong Database):
 
-* Cấu hình chạy các file tại thư mục `automation/`:
-* **`run_fast_pipeline.bat`**: Chạy Luồng 1.
-* **`run_deep_ai_pipeline.bat`**: Chạy Luồng 2 và cập nhật Model.
-
-
-
-```
+```bash
+python src/ai_engine/train_xgb.py
 
 ```
