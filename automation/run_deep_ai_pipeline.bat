@@ -15,23 +15,31 @@ echo ========================================= >> logs\deep_pipeline.log
 echo [%date% %time%] BAT DAU LUONG DEEP & AI >> logs\deep_pipeline.log
 
 :: === BƯỚC 1: DEEP CRAWL (CHI TIẾT) ===
-echo [%date% %time%] [1/3] Dang cao chi tiet BĐS... >> logs\deep_pipeline.log
+echo [%date% %time%] [1/4] Dang cao chi tiet BĐS... >> logs\deep_pipeline.log
 python -m src.data_loader.detail_spider >> logs\deep_pipeline.log 2>&1
 if %errorlevel% neq 0 (
     echo [%date% %time%] LOI: Detail Spider that bai. Dung pipeline. >> logs\deep_pipeline.log
     goto :error
 )
 
-:: === BƯỚC 2: TRAIN AI MODEL ===
-echo [%date% %time%] [2/3] Dang huan luyen AI tren du lieu moi... >> logs\deep_pipeline.log
+:: === BƯỚC 2: CLEAN DATA (PART 2) ===
+echo [%date% %time%] [2/4] Dang clean du lieu... >> logs\deep_pipeline.log
+python -m src.preprocessing.clean_phase2 >> logs\deep_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: clean data phase 2 that bai. Dung pipeline. >> logs\deep_pipeline.log
+    goto :error
+)
+
+:: === BƯỚC 3: TRAIN AI MODEL ===
+echo [%date% %time%] [3/4] Dang huan luyen AI tren du lieu moi... >> logs\deep_pipeline.log
 python -m src.ai_engine.train_xgb >> logs\deep_pipeline.log 2>&1
 if %errorlevel% neq 0 (
     echo [%date% %time%] LOI: Train model that bai. >> logs\deep_pipeline.log
     goto :error
 )
 
-:: === BƯỚC 3: GIT PUSH (ĐỒNG BỘ CLOUD VỚI GIT LFS) ===
-echo [%date% %time%] [3/3] Dang dong bo AI Model (qua LFS) len GitHub... >> logs\deep_pipeline.log
+:: === BƯỚC 4: GIT PUSH (ĐỒNG BỘ CLOUD VỚI GIT LFS) ===
+echo [%date% %time%] [4/4] Dang dong bo AI Model (qua LFS) len GitHub... >> logs\deep_pipeline.log
 git add .gitattributes models/* logs/*
 git commit -m "Auto-update AI Model: %date% %time%" >> logs\deep_pipeline.log 2>&1
 git push origin main >> logs\deep_pipeline.log 2>&1

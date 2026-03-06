@@ -32,7 +32,7 @@ def render_prediction(df):
     valid_furnitures = ['Không xác định'] + sorted([str(x) for x in df.get('furniture', pd.Series()).dropna().unique() if str(x) != 'Không xác định'])
 
     # --- UI BỐ CỤC ---
-    st.markdown("### 1. Thông tin cơ bản")
+    st.markdown("### Thông tin cơ bản")
     col1, col2 = st.columns(2)
     with col1:
         in_type = st.selectbox("Loại hình BĐS:", valid_types, key="pred_type")
