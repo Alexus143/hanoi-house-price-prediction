@@ -80,7 +80,11 @@ def train_catboost_model(X, y):
 
     best_model = CatBoostRegressor(
         random_state=42,
-        verbose=False,
+        grow_policy='Lossguide',  # Thêm dòng này để cho phép dùng max_leaves
+        loss_function='MAE',
+        eval_metric='MAE',
+        task_type='GPU', # Nhớ tận dụng GPU Colab nhé
+        verbose=100,
         **study.best_params
     )
     best_model.fit(train_pool, eval_set=test_pool, early_stopping_rounds=50, verbose=False)
