@@ -64,7 +64,10 @@ def train_catboost_model(X, y):
             # Thêm tham số xử lý nhiễu
             'min_data_in_leaf': trial.suggest_int('min_data_in_leaf', 10, 50), #Chống học vẹt khi depth cao 
         }
-        model = CatBoostRegressor(**params)
+        model = CatBoostRegressor(
+            task_type="GPU",
+            devices='0',
+            **params)
         model.fit(train_pool, eval_set=test_pool, early_stopping_rounds=50, verbose=False)
         y_pred_unit = np.expm1(model.predict(test_pool))
         y_pred_total = y_pred_unit * X_test['area']
