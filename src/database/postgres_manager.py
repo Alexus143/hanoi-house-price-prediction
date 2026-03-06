@@ -15,7 +15,11 @@ class PostgresManager:
     def __init__(self):
         """Khởi tạo kết nối tới PostgreSQL sử dụng SQLAlchemy Engine"""
         try:
-            self.engine = create_engine(POSTGRES_URI)
+            self.engine = create_engine(
+                POSTGRES_URI,
+                connect_args={
+                    "sslmode": "require"
+                })
             #Ép SQLAlchemy ping thử vào DB ngay lập tức
             with self.engine.connect() as conn:
                 pass
