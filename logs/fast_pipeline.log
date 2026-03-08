@@ -725,3 +725,95 @@ Tổng số dòng thô: 29163
 🔄 Upsert thành công 5241 bản ghi vào 'bds_hadong'.
 ✅ Hoàn tất Pipeline ETL.
 [Sat 03/07/2026 23:36:52.86] [3/3] Dang dong bo Data len GitHub... 
+[main c631bfb] Auto-update Fast Pipeline: Sat 03/07/2026 23:36:54.95
+ 4 files changed, 1746 insertions(+), 1426 deletions(-)
+fatal: Unable to persist credentials with the 'wincredman' credential store.
+See https://aka.ms/gcm/credstores for more information.
+bash: line 1: /dev/tty: No such device or address
+error: failed to execute prompt script (exit code 1)
+fatal: could not read Username for 'https://github.com': No such file or directory
+[Sat 03/07/2026 23:36:58.04] HOAN THANH LUONG FAST 
+========================================= 
+[Sun 03/08/2026 12:48:16.62] BAT DAU LUONG FAST (QUET BE MAT) 
+[Sun 03/08/2026 12:48:16.64] [1/3] Dang cao du lieu be mat... 
+[Browser] Đang khởi tạo trình duyệt...
+[Browser] Phát hiện Chrome (Windows): Version 139
+
+[Spider] Đang cào trang 1/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 1.
+
+[Spider] Đang cào trang 2/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p2
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 2.
+
+[Spider] Đang cào trang 3/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p3
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 3.
+
+[Spider] Đang cào trang 4/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p4
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 4.
+
+[Spider] Đang cào trang 5/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p5
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 5.
+
+[Spider] Đang cào trang 6/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p6
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 6.
+
+[Spider] Đang cào trang 7/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p7
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 7.
+
+[Spider] Đang cào trang 8/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p8
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 8.
+
+[Spider] Đang cào trang 9/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p9
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 9.
+
+[Spider] Đang cào trang 10/10: https://batdongsan.com.vn/nha-dat-ban-ha-dong/p10
+[Spider] Lỗi tại trang 10 (Attempt 1): Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=139.0.7258.139)
+Stacktrace:
+	GetHandleVerifier [0x0xd6a8a3+63283]
+	GetHandleVerifier [0x0xd6a8e4+63348]
+	(No symbol) [0x0xba3e43]
+	(No symbol) [0x0xba156b]
+	(No symbol) [0x0xb94d32]
+	(No symbol) [0x0xb96768]
+	(No symbol) [0x0xb94fc8]
+	(No symbol) [0x0xb94b03]
+	(No symbol) [0x0xb94811]
+	(No symbol) [0x0xb927b4]
+	(No symbol) [0x0xb9315b]
+	(No symbol) [0x0xba785e]
+	(No symbol) [0x0xc332e7]
+	(No symbol) [0x0xc1141c]
+	(No symbol) [0x0xc3271a]
+	(No symbol) [0x0xc11216]
+	(No symbol) [0x0xbe0855]
+	(No symbol) [0x0xbe16f4]
+	GetHandleVerifier [0x0xfdbb43+2623955]
+	GetHandleVerifier [0x0xfd6daa+2604090]
+	GetHandleVerifier [0x0xd9069a+218410]
+	GetHandleVerifier [0x0xd80ed8+154984]
+	GetHandleVerifier [0x0xd8742d+180925]
+	GetHandleVerifier [0x0xd722b8+94536]
+	GetHandleVerifier [0x0xd72442+94930]
+	GetHandleVerifier [0x0xd5d5ea+9338]
+	BaseThreadInitThunk [0x0x7715fcc9+25]
+	RtlGetAppContainerNamedObjectPath [0x0x77a1839e+286]
+	RtlGetAppContainerNamedObjectPath [0x0x77a1836e+238]
+
+[Spider] 🔄 Đang thử tải lại lần 2/3 cho trang 10...
+[Spider] ✅ Thành công: Tìm thấy 30 tin đăng ở trang 10.
+[Spider] Đang gộp dữ liệu mới vào file cũ (Khớp theo tên cột)...
+[Spider] Đã lưu 230 dòng mới. Tổng: 29393 dòng.
+[Sun 03/08/2026 12:53:47.34] [2/3] Dang lam sach va day vao PostgreSQL... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+Đang đọc dữ liệu thô...
+Tổng số dòng thô: 29393
+🧠 Đang áp dụng NLP trích xuất Đặc trưng...
+🧠 Đang áp dụng KNN Imputer...
+✅ Giữ lại 5242/29393 tin hợp lệ.
+✅ Đã kết nối thành công tới PostgreSQL.
+✅ Bảng 'bds_hadong' đã có PRIMARY KEY. Bỏ qua.
+Đang thực hiện Upsert dữ liệu vào PostgreSQL...
+🔄 Upsert thành công 5242 bản ghi vào 'bds_hadong'.
+✅ Hoàn tất Pipeline ETL.
+[Sun 03/08/2026 12:54:22.13] [3/3] Dang dong bo Data len GitHub... 
