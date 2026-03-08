@@ -59,6 +59,8 @@ def train_xgb_model(X, y):
             'subsample': trial.suggest_float('subsample', 0.6, 1.0),
             'colsample_bytree': trial.suggest_float('colsample_bytree', 0.6, 1.0),
             'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
+            'task_type': 'GPU', # Tận dụng GPU nếu có
+            'devices': '0'
         }
         model = XGBRegressor(**params)
         model.fit(X_train, np.log1p(y_train['unit_price']))
@@ -73,10 +75,7 @@ def train_xgb_model(X, y):
 
     best_model = XGBRegressor(
         objective='reg:absoluteerror',
-        random_state=42,
         n_jobs=-1,
-        task_type="GPU",
-            devices='0',
         **study.best_params
     )
     best_model.fit(X_train, np.log1p(y_train['unit_price']))

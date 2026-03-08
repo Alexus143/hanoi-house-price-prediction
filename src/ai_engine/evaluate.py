@@ -26,4 +26,4 @@ def champion_challenger_evaluation(challenger_model, challenger_mae, feature_col
             save_model(challenger_model, challenger_mae, feature_columns, path)
     else:
         print("🌟 Chưa có model trong hệ thống. Đang lưu Challenger làm Champion đầu tiên!")
-        save_model(challenger_model, challenger_mae, feature_columns)
+        save_model(challenger_model, challenger_mae, feature_columns, path)
