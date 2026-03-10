@@ -153,8 +153,6 @@ def process_and_save():
     advanced_features = ['frontage', 'road_width', 'direction', 'floors', 'legal_status', 'furniture']
     for col in advanced_features:
         df_final[col] = None
-        
-    # ==================================================
 
     db = PostgresManager()
     table_name = 'bds_hadong'
