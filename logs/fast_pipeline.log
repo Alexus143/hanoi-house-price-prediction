@@ -2302,3 +2302,11 @@ Tổng số dòng thô: 32258
 🔄 Upsert thành công 5431 bản ghi vào 'bds_hadong'.
 ✅ Hoàn tất Pipeline ETL.
 [Sun 03/22/2026 12:45:40.27] [3/3] Dang dong bo Data len GitHub... 
+[main d8996d4] Auto-update Fast Pipeline: Sun 03/22/2026 12:45:43.58
+ 4 files changed, 9926 insertions(+), 9591 deletions(-)
+fatal: Unable to persist credentials with the 'wincredman' credential store.
+See https://aka.ms/gcm/credstores for more information.
+bash: line 1: /dev/tty: No such device or address
+error: failed to execute prompt script (exit code 1)
+fatal: could not read Username for 'https://github.com': No such file or directory
+[Sun 03/22/2026 12:45:49.22] HOAN THANH LUONG FAST 
