@@ -1,8 +1,11 @@
 @echo off
+setlocal
 :: Thay đổi bảng mã của cmd sang UTF-8
 chcp 65001 >nul
 :: Ép Python sử dụng UTF-8 khi in dữ liệu ra file log
 set PYTHONIOENCODING=utf-8
+:: Chạy ở chế độ non-interactive (run ẩn) nên không cho Git hỏi username/password qua prompt.
+set GIT_TERMINAL_PROMPT=0
 
 cd /d "D:\Python\realtime_estimate_tracker"
 call venv_bds\Scripts\activate
@@ -41,9 +44,30 @@ if %errorlevel% neq 0 (
 :: === BƯỚC 4: GIT PUSH (ĐỒNG BỘ CLOUD VỚI GIT LFS) ===
 echo [%date% %time%] [4/4] Dang dong bo AI Model (qua LFS) len GitHub... >> logs\deep_pipeline.log
 git add .gitattributes models/* logs/*
-git commit -m "Auto-update AI Model: %date% %time%" >> logs\deep_pipeline.log 2>&1
-git push origin main >> logs\deep_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git add that bai. >> logs\deep_pipeline.log
+    goto :error
+)
 
+git diff --cached --quiet
+if %errorlevel% equ 0 (
+    echo [%date% %time%] Khong co thay doi moi de commit/push. >> logs\deep_pipeline.log
+    goto :success
+)
+
+git commit -m "Auto-update AI Model: %date% %time%" >> logs\deep_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git commit that bai. >> logs\deep_pipeline.log
+    goto :error
+)
+
+git push origin main >> logs\deep_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git push that bai. >> logs\deep_pipeline.log
+    goto :error
+)
+
+:success
 echo [%date% %time%] HOAN THANH LUONG DEEP & AI >> logs\deep_pipeline.log
 goto :eof
 

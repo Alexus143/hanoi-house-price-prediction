@@ -1,8 +1,11 @@
 @echo off
+setlocal
 :: Thay đổi bảng mã của cmd sang UTF-8
 chcp 65001 >nul
 :: Ép Python sử dụng UTF-8 khi in dữ liệu ra file log
 set PYTHONIOENCODING=utf-8
+:: Chạy ở chế độ non-interactive (run ẩn) nên không cho Git hỏi username/password qua prompt.
+set GIT_TERMINAL_PROMPT=0
 
 cd /d "D:\Python\realtime_estimate_tracker"
 call venv_bds\Scripts\activate
@@ -33,9 +36,30 @@ if %errorlevel% neq 0 (
 :: === BƯỚC 3: GIT PUSH ===
 echo [%date% %time%] [3/3] Dang dong bo Data len GitHub... >> logs\fast_pipeline.log
 git add data/* logs/*
-git commit -m "Auto-update Fast Pipeline: %date% %time%" >> logs\fast_pipeline.log 2>&1
-git push origin main >> logs\fast_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git add that bai. >> logs\fast_pipeline.log
+    goto :error
+)
 
+git diff --cached --quiet
+if %errorlevel% equ 0 (
+    echo [%date% %time%] Khong co thay doi moi de commit/push. >> logs\fast_pipeline.log
+    goto :success
+)
+
+git commit -m "Auto-update Fast Pipeline: %date% %time%" >> logs\fast_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git commit that bai. >> logs\fast_pipeline.log
+    goto :error
+)
+
+git push origin main >> logs\fast_pipeline.log 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] LOI: git push that bai. >> logs\fast_pipeline.log
+    goto :error
+)
+
+:success
 echo [%date% %time%] HOAN THANH LUONG FAST >> logs\fast_pipeline.log
 goto :eof
 
