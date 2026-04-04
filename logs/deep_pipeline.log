@@ -9412,3 +9412,9 @@ R² của mô hình XGBoost: 0.9330
 🥊 Đang so sánh... Champion MAE: 1.6245 vs Challenger MAE: 1.6946
 🛡️ Champion bảo vệ ngôi vương. Giữ nguyên mô hình cũ.
 [Fri 04/03/2026 22:07:44.57] [4/4] Dang dong bo AI Model (qua LFS) len GitHub... 
+[main 21af10a] Auto-update AI Model: Fri 04/03/2026 22:07:47.09
+ 2 files changed, 321 insertions(+)
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/HieuNT316/hanoi-house-price-prediction.git        
+To https://github.com/Alexus143/hanoi-house-price-prediction.git
+   3fbfd4c..21af10a  main -> main
