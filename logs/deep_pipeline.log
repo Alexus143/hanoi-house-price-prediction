@@ -14263,3 +14263,300 @@ remote: This repository moved. Please use the new location:
 remote:   https://github.com/HieuNT316/hanoi-house-price-prediction.git        
 To https://github.com/Alexus143/hanoi-house-price-prediction.git
    3de8573..0e3b793  main -> main
+========================================= 
+[Sun 04/19/2026 22:00:03.75] [1/4] Dang cao chi tiet BĐS... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+
+[DetailSpider] Khởi động luồng làm giàu dữ liệu (Limit: 50 bài/lượt)...
+✅ Đã kết nối thành công tới PostgreSQL.
+[Browser] Đang khởi tạo trình duyệt...
+[Browser] Phát hiện Chrome (Windows): Version 139
+
+[DetailSpider] Đang cào (1/7): https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-phu-lam-1-the-vesta/ban-67m-cac-h-ai-nam-chi-200m-pr45580218
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (2/7): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-phuong-phu-la-khu-do-thi-moi-van-phu/e-ang-co-1-so-quy-can-chu-can-tien-cat-lo-3-4ty-can-dt80m-chi-18-35ty-pr45583117
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (3/7): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-van-phu-phuong-quang-trung-17-15/cm-vi-tri-ep-nhat-k-t-6-tang-thang-may-kinh-doanh-cam-ket-gia-re-nhat-khu-vuc-pr45582649
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (4/7): https://batdongsan.com.vn/ban-nha-rieng-duong-tran-phu-phuong-van-quan-15/ban-sat-pho-luong-ngoc-quyen-ha-ong-o-to-o-cua-42m2-4t-gia-nhinh-10-ty-pr45582263
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (5/7): https://batdongsan.com.vn/ban-dat-duong-le-trong-tan-phuong-quang-trung-17-15/chinh-chu-ban-at-noi-ha-ong-co-hoi-x3-x4-canh-gleximco-ban-gap-pr45563194
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (6/7): https://batdongsan.com.vn/ban-nha-rieng-duong-nhan-hue-phuong-dong-mai-1-15/ban-gap-150m-ra-ql6-mo-rong-xay-5-tang-5m-ra-o-to-tranh-pr44601411
+  -> Lấy được 3/6 feature chi tiết.
+
+[DetailSpider] Đang cào (7/7): https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-phuong-phu-la-khu-do-thi-moi-van-phu/ha-ong-90m-uong-11m-ma-gia-nay-co-e-gi-khong-pr45552665
+  -> Lấy được 4/6 feature chi tiết.
+
+[DetailSpider] Hoàn thành. Cập nhật thành công 7/7 bài đăng.
+[Sun 04/19/2026 22:02:07.21] [2/4] Dang clean du lieu... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+✅ Đã kết nối thành công tới PostgreSQL.
+🔄 Upsert thành công 5808 bản ghi vào 'bds_hadong'.
+✅ Đã cập nhật cột legal_status và furniture thành công.
+[Sun 04/19/2026 22:02:30.93] [3/4] Dang huan luyen AI tren du lieu moi... 
+🔍 Đang cấu hình Database với: postgres.kkwivuufxdewurmxtsto@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+[I 2026-04-19 22:02:55,172] A new study created in memory with name: no-name-7ab5e774-973f-4c76-9238-6e76d27af171
+✅ Đã kết nối thành công tới PostgreSQL.
+  0%|          | 0/50 [00:00<?, ?it/s]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:02:55] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                        0%|          | 0/50 [00:03<?, ?it/s]Best trial: 0. Best value: 2.00407:   0%|          | 0/50 [00:03<?, ?it/s]Best trial: 0. Best value: 2.00407:   2%|▏         | 1/50 [00:03<02:34,  3.15s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:02:58] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 0. Best value: 2.00407:   2%|▏         | 1/50 [00:04<02:34,  3.15s/it]Best trial: 1. Best value: 1.87242:   2%|▏         | 1/50 [00:04<02:34,  3.15s/it]Best trial: 1. Best value: 1.87242:   4%|▍         | 2/50 [00:04<01:35,  2.00s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:02:59] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 1. Best value: 1.87242:   4%|▍         | 2/50 [00:05<01:35,  2.00s/it]Best trial: 1. Best value: 1.87242:   4%|▍         | 2/50 [00:05<01:35,  2.00s/it]Best trial: 1. Best value: 1.87242:   6%|▌         | 3/50 [00:05<01:21,  1.73s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:00] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 1. Best value: 1.87242:   6%|▌         | 3/50 [00:06<01:21,  1.73s/it]Best trial: 1. Best value: 1.87242:   6%|▌         | 3/50 [00:06<01:21,  1.73s/it]Best trial: 1. Best value: 1.87242:   8%|▊         | 4/50 [00:06<01:05,  1.43s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:01] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 1. Best value: 1.87242:   8%|▊         | 4/50 [00:11<01:05,  1.43s/it]Best trial: 4. Best value: 1.83671:   8%|▊         | 4/50 [00:11<01:05,  1.43s/it]Best trial: 4. Best value: 1.83671:  10%|█         | 5/50 [00:11<01:52,  2.51s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:06] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 4. Best value: 1.83671:  10%|█         | 5/50 [00:12<01:52,  2.51s/it]Best trial: 4. Best value: 1.83671:  10%|█         | 5/50 [00:12<01:52,  2.51s/it]Best trial: 4. Best value: 1.83671:  12%|█▏        | 6/50 [00:12<01:34,  2.15s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:07] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 4. Best value: 1.83671:  12%|█▏        | 6/50 [00:15<01:34,  2.15s/it]Best trial: 6. Best value: 1.79636:  12%|█▏        | 6/50 [00:15<01:34,  2.15s/it]Best trial: 6. Best value: 1.79636:  14%|█▍        | 7/50 [00:15<01:43,  2.42s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:10] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 6. Best value: 1.79636:  14%|█▍        | 7/50 [00:17<01:43,  2.42s/it]Best trial: 6. Best value: 1.79636:  14%|█▍        | 7/50 [00:17<01:43,  2.42s/it]Best trial: 6. Best value: 1.79636:  16%|█▌        | 8/50 [00:17<01:31,  2.18s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:12] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 6. Best value: 1.79636:  16%|█▌        | 8/50 [00:18<01:31,  2.18s/it]Best trial: 6. Best value: 1.79636:  16%|█▌        | 8/50 [00:18<01:31,  2.18s/it]Best trial: 6. Best value: 1.79636:  18%|█▊        | 9/50 [00:18<01:19,  1.95s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:13] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                  Best trial: 6. Best value: 1.79636:  18%|█▊        | 9/50 [00:19<01:19,  1.95s/it]Best trial: 6. Best value: 1.79636:  18%|█▊        | 9/50 [00:19<01:19,  1.95s/it]Best trial: 6. Best value: 1.79636:  20%|██        | 10/50 [00:19<01:09,  1.74s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:15] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  20%|██        | 10/50 [00:23<01:09,  1.74s/it]Best trial: 6. Best value: 1.79636:  20%|██        | 10/50 [00:23<01:09,  1.74s/it]Best trial: 6. Best value: 1.79636:  22%|██▏       | 11/50 [00:23<01:32,  2.37s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:18] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  22%|██▏       | 11/50 [00:28<01:32,  2.37s/it]Best trial: 6. Best value: 1.79636:  22%|██▏       | 11/50 [00:28<01:32,  2.37s/it]Best trial: 6. Best value: 1.79636:  24%|██▍       | 12/50 [00:28<01:58,  3.12s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:23] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  24%|██▍       | 12/50 [00:32<01:58,  3.12s/it]Best trial: 6. Best value: 1.79636:  24%|██▍       | 12/50 [00:32<01:58,  3.12s/it]Best trial: 6. Best value: 1.79636:  26%|██▌       | 13/50 [00:32<01:59,  3.22s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:27] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  26%|██▌       | 13/50 [00:34<01:59,  3.22s/it]Best trial: 6. Best value: 1.79636:  26%|██▌       | 13/50 [00:34<01:59,  3.22s/it]Best trial: 6. Best value: 1.79636:  28%|██▊       | 14/50 [00:34<01:46,  2.96s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:29] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  28%|██▊       | 14/50 [00:39<01:46,  2.96s/it]Best trial: 6. Best value: 1.79636:  28%|██▊       | 14/50 [00:39<01:46,  2.96s/it]Best trial: 6. Best value: 1.79636:  30%|███       | 15/50 [00:39<02:06,  3.61s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:34] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  30%|███       | 15/50 [00:42<02:06,  3.61s/it]Best trial: 6. Best value: 1.79636:  30%|███       | 15/50 [00:42<02:06,  3.61s/it]Best trial: 6. Best value: 1.79636:  32%|███▏      | 16/50 [00:42<01:59,  3.53s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:38] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  32%|███▏      | 16/50 [00:46<01:59,  3.53s/it]Best trial: 6. Best value: 1.79636:  32%|███▏      | 16/50 [00:46<01:59,  3.53s/it]Best trial: 6. Best value: 1.79636:  34%|███▍      | 17/50 [00:46<01:53,  3.45s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:41] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  34%|███▍      | 17/50 [00:48<01:53,  3.45s/it]Best trial: 6. Best value: 1.79636:  34%|███▍      | 17/50 [00:48<01:53,  3.45s/it]Best trial: 6. Best value: 1.79636:  36%|███▌      | 18/50 [00:48<01:43,  3.24s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:44] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  36%|███▌      | 18/50 [00:50<01:43,  3.24s/it]Best trial: 6. Best value: 1.79636:  36%|███▌      | 18/50 [00:50<01:43,  3.24s/it]Best trial: 6. Best value: 1.79636:  38%|███▊      | 19/50 [00:50<01:29,  2.89s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:46] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  38%|███▊      | 19/50 [00:53<01:29,  2.89s/it]Best trial: 6. Best value: 1.79636:  38%|███▊      | 19/50 [00:53<01:29,  2.89s/it]Best trial: 6. Best value: 1.79636:  40%|████      | 20/50 [00:53<01:23,  2.77s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:48] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  40%|████      | 20/50 [00:56<01:23,  2.77s/it]Best trial: 6. Best value: 1.79636:  40%|████      | 20/50 [00:56<01:23,  2.77s/it]Best trial: 6. Best value: 1.79636:  42%|████▏     | 21/50 [00:56<01:20,  2.79s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:51] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  42%|████▏     | 21/50 [00:59<01:20,  2.79s/it]Best trial: 6. Best value: 1.79636:  42%|████▏     | 21/50 [00:59<01:20,  2.79s/it]Best trial: 6. Best value: 1.79636:  44%|████▍     | 22/50 [00:59<01:18,  2.81s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:54] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  44%|████▍     | 22/50 [01:01<01:18,  2.81s/it]Best trial: 6. Best value: 1.79636:  44%|████▍     | 22/50 [01:01<01:18,  2.81s/it]Best trial: 6. Best value: 1.79636:  46%|████▌     | 23/50 [01:01<01:14,  2.74s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:03:56] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                   Best trial: 6. Best value: 1.79636:  46%|████▌     | 23/50 [01:06<01:14,  2.74s/it]Best trial: 23. Best value: 1.79172:  46%|████▌     | 23/50 [01:06<01:14,  2.74s/it]Best trial: 23. Best value: 1.79172:  48%|████▊     | 24/50 [01:06<01:27,  3.35s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:01] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 23. Best value: 1.79172:  48%|████▊     | 24/50 [01:11<01:27,  3.35s/it]Best trial: 24. Best value: 1.78168:  48%|████▊     | 24/50 [01:11<01:27,  3.35s/it]Best trial: 24. Best value: 1.78168:  50%|█████     | 25/50 [01:11<01:34,  3.78s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:06] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 24. Best value: 1.78168:  50%|█████     | 25/50 [01:15<01:34,  3.78s/it]Best trial: 24. Best value: 1.78168:  50%|█████     | 25/50 [01:15<01:34,  3.78s/it]Best trial: 24. Best value: 1.78168:  52%|█████▏    | 26/50 [01:15<01:34,  3.96s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:10] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 24. Best value: 1.78168:  52%|█████▏    | 26/50 [01:21<01:34,  3.96s/it]Best trial: 24. Best value: 1.78168:  52%|█████▏    | 26/50 [01:21<01:34,  3.96s/it]Best trial: 24. Best value: 1.78168:  54%|█████▍    | 27/50 [01:21<01:41,  4.40s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:16] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 24. Best value: 1.78168:  54%|█████▍    | 27/50 [01:26<01:41,  4.40s/it]Best trial: 24. Best value: 1.78168:  54%|█████▍    | 27/50 [01:26<01:41,  4.40s/it]Best trial: 24. Best value: 1.78168:  56%|█████▌    | 28/50 [01:26<01:42,  4.65s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:21] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 24. Best value: 1.78168:  56%|█████▌    | 28/50 [01:30<01:42,  4.65s/it]Best trial: 24. Best value: 1.78168:  56%|█████▌    | 28/50 [01:30<01:42,  4.65s/it]Best trial: 24. Best value: 1.78168:  58%|█████▊    | 29/50 [01:30<01:33,  4.44s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:25] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 24. Best value: 1.78168:  58%|█████▊    | 29/50 [01:36<01:33,  4.44s/it]Best trial: 29. Best value: 1.75514:  58%|█████▊    | 29/50 [01:36<01:33,  4.44s/it]Best trial: 29. Best value: 1.75514:  60%|██████    | 30/50 [01:36<01:39,  4.99s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:31] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 29. Best value: 1.75514:  60%|██████    | 30/50 [01:42<01:39,  4.99s/it]Best trial: 30. Best value: 1.74579:  60%|██████    | 30/50 [01:42<01:39,  4.99s/it]Best trial: 30. Best value: 1.74579:  62%|██████▏   | 31/50 [01:42<01:38,  5.21s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:37] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  62%|██████▏   | 31/50 [01:48<01:38,  5.21s/it]Best trial: 30. Best value: 1.74579:  62%|██████▏   | 31/50 [01:48<01:38,  5.21s/it]Best trial: 30. Best value: 1.74579:  64%|██████▍   | 32/50 [01:48<01:38,  5.46s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:43] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  64%|██████▍   | 32/50 [01:54<01:38,  5.46s/it]Best trial: 30. Best value: 1.74579:  64%|██████▍   | 32/50 [01:54<01:38,  5.46s/it]Best trial: 30. Best value: 1.74579:  66%|██████▌   | 33/50 [01:54<01:34,  5.58s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:49] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  66%|██████▌   | 33/50 [02:00<01:34,  5.58s/it]Best trial: 30. Best value: 1.74579:  66%|██████▌   | 33/50 [02:00<01:34,  5.58s/it]Best trial: 30. Best value: 1.74579:  68%|██████▊   | 34/50 [02:00<01:30,  5.66s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:04:55] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  68%|██████▊   | 34/50 [02:05<01:30,  5.66s/it]Best trial: 30. Best value: 1.74579:  68%|██████▊   | 34/50 [02:05<01:30,  5.66s/it]Best trial: 30. Best value: 1.74579:  70%|███████   | 35/50 [02:05<01:23,  5.54s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:00] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  70%|███████   | 35/50 [02:11<01:23,  5.54s/it]Best trial: 30. Best value: 1.74579:  70%|███████   | 35/50 [02:11<01:23,  5.54s/it]Best trial: 30. Best value: 1.74579:  72%|███████▏  | 36/50 [02:11<01:21,  5.84s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:07] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  72%|███████▏  | 36/50 [02:16<01:21,  5.84s/it]Best trial: 30. Best value: 1.74579:  72%|███████▏  | 36/50 [02:16<01:21,  5.84s/it]Best trial: 30. Best value: 1.74579:  74%|███████▍  | 37/50 [02:16<01:12,  5.55s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:11] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  74%|███████▍  | 37/50 [02:20<01:12,  5.55s/it]Best trial: 30. Best value: 1.74579:  74%|███████▍  | 37/50 [02:20<01:12,  5.55s/it]Best trial: 30. Best value: 1.74579:  76%|███████▌  | 38/50 [02:20<01:00,  5.04s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:15] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 30. Best value: 1.74579:  76%|███████▌  | 38/50 [02:24<01:00,  5.04s/it]Best trial: 38. Best value: 1.74367:  76%|███████▌  | 38/50 [02:24<01:00,  5.04s/it]Best trial: 38. Best value: 1.74367:  78%|███████▊  | 39/50 [02:24<00:53,  4.84s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:20] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 38. Best value: 1.74367:  78%|███████▊  | 39/50 [02:29<00:53,  4.84s/it]Best trial: 38. Best value: 1.74367:  78%|███████▊  | 39/50 [02:29<00:53,  4.84s/it]Best trial: 38. Best value: 1.74367:  80%|████████  | 40/50 [02:29<00:46,  4.69s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:24] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 38. Best value: 1.74367:  80%|████████  | 40/50 [02:33<00:46,  4.69s/it]Best trial: 38. Best value: 1.74367:  80%|████████  | 40/50 [02:33<00:46,  4.69s/it]Best trial: 38. Best value: 1.74367:  82%|████████▏ | 41/50 [02:33<00:40,  4.53s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:28] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 38. Best value: 1.74367:  82%|████████▏ | 41/50 [02:38<00:40,  4.53s/it]Best trial: 38. Best value: 1.74367:  82%|████████▏ | 41/50 [02:38<00:40,  4.53s/it]Best trial: 38. Best value: 1.74367:  84%|████████▍ | 42/50 [02:38<00:36,  4.57s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:33] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 38. Best value: 1.74367:  84%|████████▍ | 42/50 [02:42<00:36,  4.57s/it]Best trial: 42. Best value: 1.74081:  84%|████████▍ | 42/50 [02:42<00:36,  4.57s/it]Best trial: 42. Best value: 1.74081:  86%|████████▌ | 43/50 [02:42<00:32,  4.66s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:38] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  86%|████████▌ | 43/50 [02:47<00:32,  4.66s/it]Best trial: 42. Best value: 1.74081:  86%|████████▌ | 43/50 [02:47<00:32,  4.66s/it]Best trial: 42. Best value: 1.74081:  88%|████████▊ | 44/50 [02:47<00:26,  4.48s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:42] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  88%|████████▊ | 44/50 [02:50<00:26,  4.48s/it]Best trial: 42. Best value: 1.74081:  88%|████████▊ | 44/50 [02:50<00:26,  4.48s/it]Best trial: 42. Best value: 1.74081:  90%|█████████ | 45/50 [02:50<00:21,  4.33s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:46] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  90%|█████████ | 45/50 [02:55<00:21,  4.33s/it]Best trial: 42. Best value: 1.74081:  90%|█████████ | 45/50 [02:55<00:21,  4.33s/it]Best trial: 42. Best value: 1.74081:  92%|█████████▏| 46/50 [02:55<00:17,  4.45s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:50] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  92%|█████████▏| 46/50 [02:58<00:17,  4.45s/it]Best trial: 42. Best value: 1.74081:  92%|█████████▏| 46/50 [02:58<00:17,  4.45s/it]Best trial: 42. Best value: 1.74081:  94%|█████████▍| 47/50 [02:58<00:11,  3.93s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:53] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  94%|█████████▍| 47/50 [03:02<00:11,  3.93s/it]Best trial: 42. Best value: 1.74081:  94%|█████████▍| 47/50 [03:02<00:11,  3.93s/it]Best trial: 42. Best value: 1.74081:  96%|█████████▌| 48/50 [03:02<00:08,  4.03s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:05:57] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  96%|█████████▌| 48/50 [03:07<00:08,  4.03s/it]Best trial: 42. Best value: 1.74081:  96%|█████████▌| 48/50 [03:07<00:08,  4.03s/it]Best trial: 42. Best value: 1.74081:  98%|█████████▊| 49/50 [03:07<00:04,  4.33s/it]D:\Python\realtime_estimate_tracker\venv_bds\lib\site-packages\xgboost\training.py:200: UserWarning: [22:06:02] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:782: 
+Parameters: { "devices", "task_type" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+                                                                                    Best trial: 42. Best value: 1.74081:  98%|█████████▊| 49/50 [03:12<00:04,  4.33s/it]Best trial: 42. Best value: 1.74081:  98%|█████████▊| 49/50 [03:12<00:04,  4.33s/it]Best trial: 42. Best value: 1.74081: 100%|██████████| 50/50 [03:12<00:00,  4.42s/it]Best trial: 42. Best value: 1.74081: 100%|██████████| 50/50 [03:12<00:00,  3.85s/it]
+[I 2026-04-19 22:02:58,323] Trial 0 finished with value: 2.004074875639941 and parameters: {'n_estimators': 1298, 'learning_rate': 0.030119727935286833, 'max_depth': 5, 'subsample': 0.7422609154205906, 'colsample_bytree': 0.9117983915501151, 'min_child_weight': 1}. Best is trial 0 with value: 2.004074875639941.
+[I 2026-04-19 22:02:59,516] Trial 1 finished with value: 1.872418254077204 and parameters: {'n_estimators': 444, 'learning_rate': 0.08010655342705433, 'max_depth': 12, 'subsample': 0.88210244091456, 'colsample_bytree': 0.9007913572691645, 'min_child_weight': 9}. Best is trial 1 with value: 1.872418254077204.
+[I 2026-04-19 22:03:00,934] Trial 2 finished with value: 1.943741087166788 and parameters: {'n_estimators': 705, 'learning_rate': 0.03374396054766083, 'max_depth': 6, 'subsample': 0.8971951323946643, 'colsample_bytree': 0.9443737420638145, 'min_child_weight': 2}. Best is trial 1 with value: 1.872418254077204.
+[I 2026-04-19 22:03:01,886] Trial 3 finished with value: 2.102760873691607 and parameters: {'n_estimators': 502, 'learning_rate': 0.01599020854608125, 'max_depth': 6, 'subsample': 0.7181365583520256, 'colsample_bytree': 0.7678773894576717, 'min_child_weight': 5}. Best is trial 1 with value: 1.872418254077204.
+[I 2026-04-19 22:03:06,315] Trial 4 finished with value: 1.8367143649993891 and parameters: {'n_estimators': 1425, 'learning_rate': 0.041697233370217676, 'max_depth': 14, 'subsample': 0.9123193469538792, 'colsample_bytree': 0.8198334281933594, 'min_child_weight': 7}. Best is trial 4 with value: 1.8367143649993891.
+[I 2026-04-19 22:03:07,779] Trial 5 finished with value: 1.8942376744232932 and parameters: {'n_estimators': 672, 'learning_rate': 0.03348897661232196, 'max_depth': 7, 'subsample': 0.8447088920110243, 'colsample_bytree': 0.7728458122877288, 'min_child_weight': 1}. Best is trial 4 with value: 1.8367143649993891.
+[I 2026-04-19 22:03:10,736] Trial 6 finished with value: 1.7963603424572623 and parameters: {'n_estimators': 817, 'learning_rate': 0.034837210220242804, 'max_depth': 14, 'subsample': 0.6625105774914545, 'colsample_bytree': 0.8802703977889907, 'min_child_weight': 3}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:12,423] Trial 7 finished with value: 2.198393902387374 and parameters: {'n_estimators': 893, 'learning_rate': 0.006011182044939287, 'max_depth': 6, 'subsample': 0.8051335509740557, 'colsample_bytree': 0.8719969467454423, 'min_child_weight': 10}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:13,855] Trial 8 finished with value: 1.959547197324017 and parameters: {'n_estimators': 341, 'learning_rate': 0.00913591632532014, 'max_depth': 12, 'subsample': 0.7634618831598282, 'colsample_bytree': 0.8893477348357788, 'min_child_weight': 1}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:15,121] Trial 9 finished with value: 2.287735607932336 and parameters: {'n_estimators': 687, 'learning_rate': 0.010499879040737887, 'max_depth': 5, 'subsample': 0.8020892596382029, 'colsample_bytree': 0.9578846699556233, 'min_child_weight': 7}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:18,927] Trial 10 finished with value: 1.8978622039271558 and parameters: {'n_estimators': 1091, 'learning_rate': 0.09524546271047267, 'max_depth': 15, 'subsample': 0.6069517470238787, 'colsample_bytree': 0.603044174918402, 'min_child_weight': 4}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:23,774] Trial 11 finished with value: 1.8317471488947357 and parameters: {'n_estimators': 1452, 'learning_rate': 0.05008933047481586, 'max_depth': 15, 'subsample': 0.9868125475568454, 'colsample_bytree': 0.8224215027925034, 'min_child_weight': 7}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:27,206] Trial 12 finished with value: 1.8431802062087543 and parameters: {'n_estimators': 1069, 'learning_rate': 0.05019413637253963, 'max_depth': 13, 'subsample': 0.9945572131612049, 'colsample_bytree': 0.6876236626855178, 'min_child_weight': 4}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:29,587] Trial 13 finished with value: 1.8484780759751642 and parameters: {'n_estimators': 943, 'learning_rate': 0.05937236986932466, 'max_depth': 10, 'subsample': 0.6451245158552938, 'colsample_bytree': 0.9973735927196143, 'min_child_weight': 7}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:34,705] Trial 14 finished with value: 1.807973238493792 and parameters: {'n_estimators': 1231, 'learning_rate': 0.02249151902576874, 'max_depth': 15, 'subsample': 0.9738084327050001, 'colsample_bytree': 0.8270405375438242, 'min_child_weight': 3}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:38,030] Trial 15 finished with value: 1.8672514485310692 and parameters: {'n_estimators': 1237, 'learning_rate': 0.0186053423917209, 'max_depth': 10, 'subsample': 0.6875484619697758, 'colsample_bytree': 0.7024716392504224, 'min_child_weight': 3}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:41,313] Trial 16 finished with value: 1.8047650037662297 and parameters: {'n_estimators': 860, 'learning_rate': 0.019542692226653172, 'max_depth': 13, 'subsample': 0.937417000607345, 'colsample_bytree': 0.8392948429611761, 'min_child_weight': 3}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:44,048] Trial 17 finished with value: 1.8734309198892003 and parameters: {'n_estimators': 848, 'learning_rate': 0.013228697366790615, 'max_depth': 12, 'subsample': 0.6717917284202837, 'colsample_bytree': 0.714837194487274, 'min_child_weight': 5}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:46,113] Trial 18 finished with value: 1.8373607430984096 and parameters: {'n_estimators': 775, 'learning_rate': 0.022514654359949007, 'max_depth': 9, 'subsample': 0.9241570112259417, 'colsample_bytree': 0.8583684807511314, 'min_child_weight': 3}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:48,620] Trial 19 finished with value: 2.0827601592040104 and parameters: {'n_estimators': 565, 'learning_rate': 0.005162196133177429, 'max_depth': 13, 'subsample': 0.8453993076329248, 'colsample_bytree': 0.7639206224819759, 'min_child_weight': 2}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:51,455] Trial 20 finished with value: 1.8064991299274558 and parameters: {'n_estimators': 997, 'learning_rate': 0.025907300132769213, 'max_depth': 11, 'subsample': 0.6004830813453904, 'colsample_bytree': 0.9338445176738202, 'min_child_weight': 4}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:54,317] Trial 21 finished with value: 1.8191489383406463 and parameters: {'n_estimators': 1003, 'learning_rate': 0.026945281527410384, 'max_depth': 11, 'subsample': 0.6111276702545575, 'colsample_bytree': 0.9384288807580378, 'min_child_weight': 4}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:03:56,894] Trial 22 finished with value: 1.8268860558288331 and parameters: {'n_estimators': 809, 'learning_rate': 0.016872398492797615, 'max_depth': 13, 'subsample': 0.6349945759454664, 'colsample_bytree': 0.9981018945029697, 'min_child_weight': 6}. Best is trial 6 with value: 1.7963603424572623.
+[I 2026-04-19 22:04:01,668] Trial 23 finished with value: 1.7917170122853783 and parameters: {'n_estimators': 1104, 'learning_rate': 0.03963058590667207, 'max_depth': 14, 'subsample': 0.6827689685745771, 'colsample_bytree': 0.8483214117914115, 'min_child_weight': 2}. Best is trial 23 with value: 1.7917170122853783.
+[I 2026-04-19 22:04:06,447] Trial 24 finished with value: 1.7816828301556653 and parameters: {'n_estimators': 1203, 'learning_rate': 0.042461454498192074, 'max_depth': 14, 'subsample': 0.6959420987608217, 'colsample_bytree': 0.8547098691034601, 'min_child_weight': 2}. Best is trial 24 with value: 1.7816828301556653.
+[I 2026-04-19 22:04:10,822] Trial 25 finished with value: 1.8326809819655654 and parameters: {'n_estimators': 1137, 'learning_rate': 0.06501932476507606, 'max_depth': 14, 'subsample': 0.6958605003650846, 'colsample_bytree': 0.791202020932609, 'min_child_weight': 2}. Best is trial 24 with value: 1.7816828301556653.
+[I 2026-04-19 22:04:16,269] Trial 26 finished with value: 1.7920402101451682 and parameters: {'n_estimators': 1343, 'learning_rate': 0.04007721712213179, 'max_depth': 14, 'subsample': 0.7552514931738923, 'colsample_bytree': 0.860168133296699, 'min_child_weight': 2}. Best is trial 24 with value: 1.7816828301556653.
+[I 2026-04-19 22:04:21,490] Trial 27 finished with value: 1.7943450991785646 and parameters: {'n_estimators': 1340, 'learning_rate': 0.04374440665253942, 'max_depth': 14, 'subsample': 0.764046979531017, 'colsample_bytree': 0.8583269702169438, 'min_child_weight': 2}. Best is trial 24 with value: 1.7816828301556653.
+[I 2026-04-19 22:04:25,439] Trial 28 finished with value: 1.850836647259466 and parameters: {'n_estimators': 1500, 'learning_rate': 0.06889503991852444, 'max_depth': 8, 'subsample': 0.7209253481434158, 'colsample_bytree': 0.7338572600866742, 'min_child_weight': 1}. Best is trial 24 with value: 1.7816828301556653.
+[I 2026-04-19 22:04:31,701] Trial 29 finished with value: 1.7551366642021322 and parameters: {'n_estimators': 1345, 'learning_rate': 0.03835517903725455, 'max_depth': 15, 'subsample': 0.7411125142078732, 'colsample_bytree': 0.9063878019570878, 'min_child_weight': 1}. Best is trial 29 with value: 1.7551366642021322.
+[I 2026-04-19 22:04:37,429] Trial 30 finished with value: 1.7457892621304079 and parameters: {'n_estimators': 1210, 'learning_rate': 0.05471223849048778, 'max_depth': 15, 'subsample': 0.7244885183766634, 'colsample_bytree': 0.9048269706254519, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:04:43,477] Trial 31 finished with value: 1.753011030872415 and parameters: {'n_estimators': 1202, 'learning_rate': 0.055342287445824395, 'max_depth': 15, 'subsample': 0.7242301787626549, 'colsample_bytree': 0.9260456361607269, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:04:49,351] Trial 32 finished with value: 1.7628725628924145 and parameters: {'n_estimators': 1191, 'learning_rate': 0.08430270370187007, 'max_depth': 15, 'subsample': 0.7285346141767128, 'colsample_bytree': 0.9096868379130038, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:04:55,185] Trial 33 finished with value: 1.809708165317748 and parameters: {'n_estimators': 1292, 'learning_rate': 0.0989968992200631, 'max_depth': 15, 'subsample': 0.7264466427024604, 'colsample_bytree': 0.9096070956838035, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:05:00,463] Trial 34 finished with value: 1.780000174247408 and parameters: {'n_estimators': 1160, 'learning_rate': 0.07617187661001548, 'max_depth': 15, 'subsample': 0.7816863873973416, 'colsample_bytree': 0.9138186498734825, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:05:07,002] Trial 35 finished with value: 1.7802229828525997 and parameters: {'n_estimators': 1387, 'learning_rate': 0.055903301592239385, 'max_depth': 15, 'subsample': 0.7383499160391465, 'colsample_bytree': 0.9677098367612695, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:05:11,865] Trial 36 finished with value: 1.7584668214045298 and parameters: {'n_estimators': 1275, 'learning_rate': 0.07727209499275685, 'max_depth': 13, 'subsample': 0.8296381048928407, 'colsample_bytree': 0.9165050232694771, 'min_child_weight': 1}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:05:15,730] Trial 37 finished with value: 1.7890956425296203 and parameters: {'n_estimators': 1271, 'learning_rate': 0.07553395826388999, 'max_depth': 13, 'subsample': 0.840375108405065, 'colsample_bytree': 0.9737039846982554, 'min_child_weight': 8}. Best is trial 30 with value: 1.7457892621304079.
+[I 2026-04-19 22:05:20,081] Trial 38 finished with value: 1.7436703057094716 and parameters: {'n_estimators': 1369, 'learning_rate': 0.053374571673754354, 'max_depth': 11, 'subsample': 0.8151438677723223, 'colsample_bytree': 0.936786340071617, 'min_child_weight': 1}. Best is trial 38 with value: 1.7436703057094716.
+[I 2026-04-19 22:05:24,416] Trial 39 finished with value: 1.7833144958722509 and parameters: {'n_estimators': 1384, 'learning_rate': 0.03300608622784121, 'max_depth': 11, 'subsample': 0.8789172843530808, 'colsample_bytree': 0.8920694108454746, 'min_child_weight': 2}. Best is trial 38 with value: 1.7436703057094716.
+[I 2026-04-19 22:05:28,574] Trial 40 finished with value: 1.7779635912349223 and parameters: {'n_estimators': 1500, 'learning_rate': 0.05092444278007732, 'max_depth': 9, 'subsample': 0.7884834953607742, 'colsample_bytree': 0.9416679361406527, 'min_child_weight': 1}. Best is trial 38 with value: 1.7436703057094716.
+[I 2026-04-19 22:05:33,233] Trial 41 finished with value: 1.7555050262099647 and parameters: {'n_estimators': 1323, 'learning_rate': 0.056928772040448286, 'max_depth': 12, 'subsample': 0.8273093287493467, 'colsample_bytree': 0.9223731460343279, 'min_child_weight': 1}. Best is trial 38 with value: 1.7436703057094716.
+[I 2026-04-19 22:05:38,122] Trial 42 finished with value: 1.7408097499935997 and parameters: {'n_estimators': 1342, 'learning_rate': 0.06135275005743977, 'max_depth': 12, 'subsample': 0.8209213445059441, 'colsample_bytree': 0.9283802486804739, 'min_child_weight': 1}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:05:42,175] Trial 43 finished with value: 1.801772733937032 and parameters: {'n_estimators': 1409, 'learning_rate': 0.047421993333380014, 'max_depth': 10, 'subsample': 0.8129381234010173, 'colsample_bytree': 0.9555495070114154, 'min_child_weight': 2}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:05:46,154] Trial 44 finished with value: 1.8438370898115914 and parameters: {'n_estimators': 1436, 'learning_rate': 0.03557205407267678, 'max_depth': 11, 'subsample': 0.874041916673663, 'colsample_bytree': 0.8794320170483192, 'min_child_weight': 10}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:05:50,869] Trial 45 finished with value: 1.7836616974309882 and parameters: {'n_estimators': 1351, 'learning_rate': 0.0657474064885272, 'max_depth': 12, 'subsample': 0.7751292813264299, 'colsample_bytree': 0.9792734846543667, 'min_child_weight': 1}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:05:53,598] Trial 46 finished with value: 1.8179229058215647 and parameters: {'n_estimators': 1038, 'learning_rate': 0.0287285925786184, 'max_depth': 9, 'subsample': 0.7498372292607441, 'colsample_bytree': 0.900621614520278, 'min_child_weight': 2}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:05:57,868] Trial 47 finished with value: 1.8200870004362986 and parameters: {'n_estimators': 1145, 'learning_rate': 0.0594697372516553, 'max_depth': 14, 'subsample': 0.7131362444298386, 'colsample_bytree': 0.9295125817598254, 'min_child_weight': 3}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:06:02,902] Trial 48 finished with value: 1.7501839128457226 and parameters: {'n_estimators': 1458, 'learning_rate': 0.0909704085570666, 'max_depth': 12, 'subsample': 0.8067651233591567, 'colsample_bytree': 0.8794054674127058, 'min_child_weight': 1}. Best is trial 42 with value: 1.7408097499935997.
+[I 2026-04-19 22:06:07,530] Trial 49 finished with value: 1.793799840274897 and parameters: {'n_estimators': 1449, 'learning_rate': 0.08098114763865054, 'max_depth': 12, 'subsample': 0.8131397423399482, 'colsample_bytree': 0.9511506304740697, 'min_child_weight': 3}. Best is trial 42 with value: 1.7408097499935997.
+✅ Tham số tối ưu nhất từ Optuna: {'n_estimators': 1342, 'learning_rate': 0.06135275005743977, 'max_depth': 12, 'subsample': 0.8209213445059441, 'colsample_bytree': 0.9283802486804739, 'min_child_weight': 1}
+MAE của mô hình XGBoost: 1.7656
+R² của mô hình XGBoost: 0.9243
+🥊 Đang so sánh... Champion MAE: 1.6245 vs Challenger MAE: 1.7656
+🛡️ Champion bảo vệ ngôi vương. Giữ nguyên mô hình cũ.
+[Sun 04/19/2026 22:06:13.05] [4/4] Dang dong bo AI Model (qua LFS) len GitHub... 

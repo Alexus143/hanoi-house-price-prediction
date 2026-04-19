@@ -4163,3 +4163,12 @@ Tổng số dòng thô: 38298
 🔄 Upsert thành công 5808 bản ghi vào 'bds_hadong'.
 ✅ Hoàn tất Pipeline ETL.
 [Sun 04/19/2026 12:03:59.04] [3/3] Dang dong bo Data len GitHub... 
+[main 511827c] Auto-update Fast Pipeline: Sun 04/19/2026 12:04:02.74
+ 4 files changed, 615 insertions(+), 311 deletions(-)
+fatal: Unable to persist credentials with the 'wincredman' credential store.
+See https://aka.ms/gcm/credstores for more information.
+fatal: Unable to persist credentials with the 'wincredman' credential store.
+See https://aka.ms/gcm/credstores for more information.
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+[Sun 04/19/2026 12:04:06.14] LOI: git push that bai. 
+[Sun 04/19/2026 12:04:06.16] LUONG FAST BI DUNG DO LOI 
