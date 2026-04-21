@@ -14882,3 +14882,9 @@ R² của mô hình XGBoost: 0.9332
 🏆 Challenger chiến thắng! Cập nhật mô hình mới vào hệ thống.
 💾 Đã lưu tại: D:\Python\realtime_estimate_tracker\models\xgb_house_price_model.pkl
 [Mon 04/20/2026 22:07:10.47] [4/4] Dang dong bo AI Model (qua LFS) len GitHub... 
+[main 207206e] Auto-update AI Model: Mon 04/20/2026 22:07:15.16
+ 3 files changed, 325 insertions(+)
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/HieuNT316/hanoi-house-price-prediction.git        
+To https://github.com/Alexus143/hanoi-house-price-prediction.git
+   ffaa6ab..207206e  main -> main
